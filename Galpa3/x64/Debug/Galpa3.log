@@ -1,0 +1,7 @@
+﻿  Utilities.c
+C:\Users\exepa\source\repos\Galpa3\Galpa3\Utilities.c(10,8): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+  main.c
+C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(112,2): warning C4098: 'main': 'void' function returning a value
+C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(75,8): warning C4101: 'tickWait': unreferenced local variable
+  Generating Code...
+  Galpa3.vcxproj -> C:\Users\exepa\source\repos\Galpa3\x64\Debug\Galpa3.exe

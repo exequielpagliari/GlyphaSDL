@@ -70,6 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\exepa\source\repos\Galpa3\Galpa3;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Users\exepa\source\repos\Galpa3\Galpa3;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -127,18 +133,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="Interface.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Play.cpp" />
-    <ClCompile Include="Prefs.cpp" />
-    <ClCompile Include="SetUpTakeDown.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="EnemyOLD.c" />
+    <ClCompile Include="GraphicsOLD.c" />
+    <ClCompile Include="InterfaceOLD.c" />
+    <ClCompile Include="MainOLD.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="PlayOLD.c" />
+    <ClCompile Include="PrefsOLD.c" />
+    <ClCompile Include="SetUpTakeDownOLD.c" />
+    <ClCompile Include="SoundOLD.c" />
+    <ClCompile Include="Utilities.c" />
+    <ClCompile Include="UtilitiesOLD.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Externs.h" />
+    <ClInclude Include="ExternsOLD" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

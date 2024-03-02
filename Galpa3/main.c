@@ -1,4 +1,4 @@
-//#include "SDL.h"
+#include "SDL.h"
 #include <Externs.h>
 
 
@@ -11,7 +11,7 @@
 
 void ReadInPrefs(void);
 void WriteOutPrefs(void);
-void main(void);
+int main(int argc, char* argv[]);
 
 
 prefsInfo	thePrefs;
@@ -70,9 +70,11 @@ void WriteOutPrefs(void)
 }
 
 
-void main(void)
+
+int main(int argc, char* argv[])
 {
 	long		tickWait;
+	CreateSeed();
 	/*
 	ToolBoxInit();			// Call function that initializes the ToolBox managers.
 	CheckEnvirons();		// Check the Mac we're on to see if we can run.
@@ -82,9 +84,42 @@ void main(void)
 	InitMenubar();			// Set up the game's menubar.
 	*/
 	ReadInPrefs();			// Load up the preferences.
+	printf(("%d \n \n"), Random());
+	printf(("%d \n \n"), RandomInt(24L));
 
 
-	
+		SDL_Init(SDL_INIT_VIDEO);
+
+		SDL_Window* Window =
+			SDL_CreateWindow("Title",
+				SDL_WINDOWPOS_CENTERED,
+				SDL_WINDOWPOS_CENTERED,
+				640, 480, 0);
+
+		int Running = 1;
+
+		SDL_Event Event = { 0 };
+
+		while (Running) {
+			while (SDL_PollEvent(&Event)) {
+				switch (Event.type) {
+				case SDL_QUIT: {
+					Running = 0;
+				} break;
+				case SDL_KEYDOWN: {
+					switch (Event.key.keysym.sym) {
+					case SDLK_o: {
+						Running = 0;
+					} break;
+					}
+				} break;
+				}
+			}
+		}
+
+		
+
+
 	/*
 	do						// Here begins the main loop.
 	{
@@ -107,6 +142,6 @@ void main(void)
 	ShutItDown();			// Dispose of other structures.
 	*/
 	WriteOutPrefs();		// Save preferences to disk.
-	
+	SDL_Quit();
 	return 0;
 }

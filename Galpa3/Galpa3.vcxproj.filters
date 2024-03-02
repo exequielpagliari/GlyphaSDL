@@ -53,7 +53,7 @@
     <ClInclude Include="Externs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ExternsOLD">
+    <ClInclude Include="ExternsOLD.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

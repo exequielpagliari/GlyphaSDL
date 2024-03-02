@@ -7,10 +7,17 @@
 
 short Random()
 {
-	srand(time(NULL));
+	
 
 	// Generar y mostrar varios nmeros aleatorios
 	return rand();
+}
+
+//Funcion creada para generar un Seed para obtener valor aleatorio por ejecucion
+void CreateSeed(void)
+{
+	unsigned int seed = (unsigned int)time(NULL);
+	srand(seed);
 }
 
 // Takes a short (range) and returns a random number from zero to range - 1.

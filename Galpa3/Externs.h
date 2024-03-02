@@ -25,6 +25,7 @@ typedef struct prefsInfo
 } prefsInfo;
 
 short Random();					// Utilities.c
+void CreateSeed(void);
 short RandomInt(short);				
 /*void RedAlert(StringPtr);
 void FindOurDevice(void);

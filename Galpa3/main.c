@@ -12,7 +12,11 @@
 void ReadInPrefs(void);
 void WriteOutPrefs(void);
 int main(int argc, char* argv[]);
-
+SDL_Window* Window = 0;
+SDL_Renderer* pRenderer = 0;
+SDL_Texture* m_pTexture; // the new SDL_Texture variable
+SDL_Rect m_sourceRectangle; // the first rectangle
+SDL_Rect m_destinationRectangle; // another rectangle
 
 prefsInfo	thePrefs;
 short		wasVolume;
@@ -96,11 +100,38 @@ int main(int argc, char* argv[])
 				SDL_WINDOWPOS_CENTERED,
 				640, 480, 0);
 
+		if(Window != 0)
+			pRenderer = SDL_CreateRenderer(Window, -1, 0);
+
 		int Running = 1;
 
 		SDL_Event Event = { 0 };
+		SDL_Surface* pTempSurface = SDL_LoadBMP("Img/130.bmp");
+
+		m_pTexture = SDL_CreateTextureFromSurface(pRenderer,
+			pTempSurface);
+		SDL_FreeSurface(pTempSurface);
+		SDL_QueryTexture(m_pTexture, NULL, NULL,
+			&m_sourceRectangle.w, &m_sourceRectangle.h);
+		m_destinationRectangle.x = m_sourceRectangle.x = 0;
+		m_destinationRectangle.y = m_sourceRectangle.y = 0;
+		m_destinationRectangle.w = m_sourceRectangle.w;
+		m_destinationRectangle.h = m_sourceRectangle.h;
 
 		while (Running) {
+			// everything succeeded lets draw the window
+// set to black // This function expects Red, Green, Blue and
+// Alpha as color values
+			SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
+			// clear the window to black
+			SDL_RenderClear(pRenderer);
+
+			SDL_RenderCopy(pRenderer, m_pTexture, &m_sourceRectangle,
+				&m_destinationRectangle);
+
+
+			// show the window
+			SDL_RenderPresent(pRenderer);
 			while (SDL_PollEvent(&Event)) {
 				switch (Event.type) {
 				case SDL_QUIT: {
@@ -116,6 +147,8 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
+
+
 
 		
 

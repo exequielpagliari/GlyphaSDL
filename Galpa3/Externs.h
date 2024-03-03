@@ -24,6 +24,13 @@ typedef struct prefsInfo
 	short		wasVolume;
 } prefsInfo;
 
+//void ToolBoxInit(void);				// SetUpTakeDown.c
+//void CheckEnvirons(void);
+//void OpenMainWindow(void);
+//void InitMenubar(void);
+void InitVariables(void);
+//void ShutItDown(void);
+
 short Random();					// Utilities.c
 void CreateSeed(void);
 short RandomInt(short);				

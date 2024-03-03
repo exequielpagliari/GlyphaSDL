@@ -146,6 +146,7 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="PlayOLD.c" />
     <ClCompile Include="PrefsOLD.c" />
+    <ClCompile Include="SetUpTakeDown.c" />
     <ClCompile Include="SetUpTakeDownOLD.c" />
     <ClCompile Include="SoundOLD.c" />
     <ClCompile Include="Utilities.c" />

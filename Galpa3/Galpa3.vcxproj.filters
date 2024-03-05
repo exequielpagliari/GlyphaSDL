@@ -18,46 +18,37 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UtilitiesOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SetUpTakeDownOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrefsOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InterfaceOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyOLD.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities.c">
+    <ClCompile Include="draw.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SetUpTakeDown.c">
+    <ClCompile Include="init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Externs.h">
+    <ClInclude Include="main.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ExternsOLD.h">
-      <Filter>Resource Files</Filter>
+    <ClInclude Include="common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="defs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="init.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

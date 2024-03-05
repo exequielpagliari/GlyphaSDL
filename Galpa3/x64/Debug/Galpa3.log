@@ -1,7 +1,2 @@
-﻿  draw.c
-  main.c
-C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(10,2): warning C4013: 'memset' undefined; assuming extern returning int
-C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(32,33): warning C4020: 'blit': too many actual parameters
-C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(33,33): warning C4020: 'blit': too many actual parameters
-  Generating Code...
+﻿  init.c
   Galpa3.vcxproj -> C:\Users\exepa\source\repos\Galpa3\x64\Debug\Galpa3.exe

@@ -4,6 +4,7 @@
 #include "common.h"
 #include <SDL.h>
 #include "structs.h"
+#include <stdbool.h>
 
 
 void prepareScene(void);
@@ -11,5 +12,6 @@ void presentScene(void);
 SDL_Texture* loadTexture(char* filename);
 void blit(SDL_Texture* texture, int x, int y);
 void blitRect(SDL_Texture* texture, SDL_Rect* src, int x, int y);
+void blitRectHW(SDL_Texture* texture, SDL_Rect* src, int x, int y, int w, int h, int frame);
 
 #endif // DRAW_Hd);

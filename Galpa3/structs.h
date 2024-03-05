@@ -17,6 +17,14 @@ typedef struct {
 
 
 typedef struct {
+	int x;
+	int y;
+	SDL_Texture* texture;
+	SDL_Rect* rect;
+
+} AnimateEntity;
+
+typedef struct {
 	Entity fighterHead, * fighterTail;
 	Entity bulletHead, * bulletTail;
 } Stage;

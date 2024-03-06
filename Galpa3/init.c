@@ -44,9 +44,8 @@ void InitVariables(void)
     
 
     
+    SetRect(flameSrcRect, 0, 0, 64, 16);
     
-    SDL_QueryTexture(flameSrcMap, NULL, NULL,
-        &flameSrcRect.w, &flameSrcRect.h);
     flameDestRects[0].x = 87;
     flameDestRects[0].y = 325;
     flameDestRects[0].w = flameSrcRect.w = 16;
@@ -61,3 +60,6 @@ void InitVariables(void)
     flameDestRects[1].h = 16;
 
 };
+
+
+//SetRect(&flameSrcRect, 0, 0, 16, 64);

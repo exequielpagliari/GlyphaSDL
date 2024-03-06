@@ -86,17 +86,13 @@ void OffsetRect(SDL_Rect rect, int x, int y)
 
 void RenderTorchA(void)
 {
-	if (flameSrcRect.y > 32)
-		flameSrcRect.y = 0;
-	
-	SDL_RenderCopy(app.renderer, flameSrcMap, &flameSrcRect,
-		&flameDestRects[0]);
+
+
 }
 
 void RenderTorchB(void)
 {
 
-	SDL_RenderCopy(app.renderer, flameSrcMap, &flameSrcRect,
-		&flameDestRects[1]);
+
 	
 }

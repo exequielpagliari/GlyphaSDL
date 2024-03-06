@@ -1,2 +1,7 @@
-﻿  init.c
+﻿  draw.c
+  init.c
+C:\Users\exepa\source\repos\Galpa3\Galpa3\init.c(43,12): warning C4101: 'i': unreferenced local variable
+  main.c
+C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(11,2): warning C4013: 'memset' undefined; assuming extern returning int
+  Generating Code...
   Galpa3.vcxproj -> C:\Users\exepa\source\repos\Galpa3\x64\Debug\Galpa3.exe

@@ -2,6 +2,9 @@
 
 
 
+
+
+
 App app;
 
 void initSDL(void) {
@@ -34,3 +37,27 @@ void initSDL(void) {
         exit(1);
     }
 }
+
+void InitVariables(void)
+{
+    short		i;
+    
+
+    
+    
+    SDL_QueryTexture(flameSrcMap, NULL, NULL,
+        &flameSrcRect.w, &flameSrcRect.h);
+    flameDestRects[0].x = 87;
+    flameDestRects[0].y = 325;
+    flameDestRects[0].w = flameSrcRect.w = 16;
+    flameDestRects[0].h = flameSrcRect.h = 16;
+    flameSrcRect.x = 0;
+    flameSrcRect.y = 0;
+
+
+    flameDestRects[1].x = 535;
+    flameDestRects[1].y = 325;
+    flameDestRects[1].w = 16;
+    flameDestRects[1].h = 16;
+
+};

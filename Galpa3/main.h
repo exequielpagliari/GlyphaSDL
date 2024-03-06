@@ -11,4 +11,6 @@
 
 //oid cleanup(void);
 
+SDL_Rect flameSrcRect, flameDestRects[2], flameRects[4];
+SDL_Texture* flameSrcMap;
 #endif // MAIN_H

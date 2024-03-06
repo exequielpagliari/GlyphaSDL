@@ -8,7 +8,7 @@
 #define kHandMaskID				129		// the various PICT's were going to…
 #define kBackgroundPictID		"Img/130.bmp"		// load up into offscreen pixmaps and…
 #define kHelpPictID				131		// offscreen bitmaps.
-#define kObeliskPictID			134
+#define kObeliskPictID			"Img/134.bmp"
 #define kPlayerPictID			135
 #define kPlayerMaskID			136
 #define kNumberPictID			137

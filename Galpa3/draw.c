@@ -67,20 +67,20 @@ void blitRectHW(SDL_Texture* texture, SDL_Rect* src, int x, int y, int w, int h,
 }
 
 
-void SetRect(SDL_Rect rect, int x, int y, int h, int w)
+void SetRect(SDL_Rect *rect, int x, int y, int w, int h)
 {
-	rect.x = x;
-	rect.y = y;
-	rect.h = h;
-	rect.w = w;
+	rect->x = x;
+	rect->y = y;
+	rect->h = h;
+	rect->w = w;
 }
 
-
-void OffsetRect(SDL_Rect rect, int x, int y)
+void OffsetRect(SDL_Rect *rect, int x, int y)
 {
-	rect.x = x;
-	rect.y = y;
-};
+	rect->x = x;
+	rect->y = y;
+}
+;
 
 
 

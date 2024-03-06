@@ -10,7 +10,9 @@
 #include <stdlib.h>
 
 //oid cleanup(void);
-
-SDL_Rect flameSrcRect, flameDestRects[2], flameRects[4];
+SDL_Rect		mainWindowRect, backSrcRect, workSrcRect, obSrcRect, playerSrcRect;
+SDL_Rect	obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11];
+SDL_Rect	flameSrcRect, flameDestRects[2], flameRects[4];
 SDL_Texture* flameSrcMap;
+SDL_Texture* obeliskSrcMap;
 #endif // MAIN_H

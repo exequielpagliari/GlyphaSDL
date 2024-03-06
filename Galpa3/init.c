@@ -44,21 +44,19 @@ void InitVariables(void)
     
 
     
-    SetRect(flameSrcRect, 0, 0, 64, 16);
-    
-    flameDestRects[0].x = 87;
-    flameDestRects[0].y = 325;
-    flameDestRects[0].w = flameSrcRect.w = 16;
-    flameDestRects[0].h = flameSrcRect.h = 16;
-    flameSrcRect.x = 0;
-    flameSrcRect.y = 0;
+    SetRect(&flameSrcRect, 0, 0, 16, 16);
+    SetRect(&flameDestRects[0], 87, 325, 16, 16);
+    SetRect(&flameDestRects[1], 535, 325, 16, 16);
 
-
-    flameDestRects[1].x = 535;
-    flameDestRects[1].y = 325;
-    flameDestRects[1].w = 16;
-    flameDestRects[1].h = 16;
-
+    SetRect(&obSrcRect, 0, 0, 20, 209);
+    SetRect(&obeliskRects[0], 0, 0, 20, 209);
+    OffsetRect(&obeliskRects[0], 0, 0);
+    SetRect(&obeliskRects[1], 0, 0, 20, 209);
+    OffsetRect(&obeliskRects[1], 0, 209);
+    SetRect(&obeliskRects[2], 0, 0, 20, 209);
+    OffsetRect(&obeliskRects[2], 161, 250);
+    SetRect(&obeliskRects[3], 0, 0, 20, 209);
+    OffsetRect(&obeliskRects[3], 457, 250);
 };
 
 

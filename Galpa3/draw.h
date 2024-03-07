@@ -1,11 +1,15 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-#include "common.h"
+#include "defs.h"
 #include <SDL.h>
-#include "structs.h"
+#include <structs.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
+#define kNumLightningPts		8
 
 void prepareScene(void);
 void presentScene(void);
@@ -20,6 +24,16 @@ extern SDL_Rect		mainWindowRect, backSrcRect, workSrcRect, obSrcRect, playerSrcR
 extern SDL_Rect flameSrcRect, flameDestRects[2], flameRects[4];
 extern SDL_Texture* flameSrcMap;
 extern SDL_Texture* obeliskSrcMap;
+extern SDL_Point leftLightningPts[kNumLightningPts] , rightLightningPts[kNumLightningPts];
+
+
+
 void RenderTorchA(void);
 void RenderTorchB(void);
+void GenerateLightning(short h, short v);
+
+
+short Random();
+void CreateSeed(void);
+short RandomInt(short range);
 #endif // DRAW_Hd);

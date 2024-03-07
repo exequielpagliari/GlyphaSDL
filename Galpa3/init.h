@@ -1,7 +1,7 @@
 #ifndef INIT_H
 #define INIT_H
 
-#include "common.h"
+
 
 #include <SDL_image.h>
 #include <SDL.h>

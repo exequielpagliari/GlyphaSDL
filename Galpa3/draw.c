@@ -5,8 +5,40 @@
 
 
 App app;
+
+
+short Random()
+{
+
+
+	// Generar y mostrar varios nmeros aleatorios
+	return rand();
+}
+
+//Funcion creada para generar un Seed para obtener valor aleatorio por ejecucion
+void CreateSeed(void)
+{
+	unsigned int seed = (unsigned int)time(NULL);
+	srand(seed);
+}
+
+// Takes a short (range) and returns a random number from zero to range - 1.
+
+short RandomInt(short range)
+{
+
+	register long int rawResult;
+
+	rawResult = Random();
+	if (rawResult < 0L)
+		rawResult *= -1L;
+	rawResult = (rawResult * (long)range) / 32768L;
+
+	return ((short)rawResult);
+}
+
 void prepareScene(void) {
-    SDL_SetRenderDrawColor(app.renderer, 96, 128, 255, 255);
+    SDL_SetRenderDrawColor(app.renderer, 255, 255, 0, 255);
     SDL_RenderClear(app.renderer);
 }
 
@@ -92,6 +124,43 @@ void RenderTorchA(void)
 
 void RenderTorchB(void)
 {
+
+
+	
+}
+
+
+
+
+void GenerateLightning(short h, short v)
+{
+#define kLeftObeliskH		172
+#define kLeftObeliskV		250
+#define kRightObeliskH		468
+#define kRightObeliskV		250
+#define kWander				16
+
+	short		i, leftDeltaH, rightDeltaH, leftDeltaV, rightDeltaV, range;
+
+	leftDeltaH = h - kLeftObeliskH;				// Determine the h and v distances betweenÉ
+	rightDeltaH = h - kRightObeliskH;			// obelisks and the target point.
+	leftDeltaV = v - kLeftObeliskV;
+	rightDeltaV = v - kRightObeliskV;
+
+	for (i = 0; i < kNumLightningPts; i++)		// Calculate an even spread of points betweenÉ
+	{											// obelisk tips and the target point.
+		leftLightningPts[i].x = (leftDeltaH * i) / (kNumLightningPts - 1) + kLeftObeliskH;
+		leftLightningPts[i].y = (leftDeltaV * i) / (kNumLightningPts - 1) + kLeftObeliskV;
+		rightLightningPts[i].x = (rightDeltaH * i) / (kNumLightningPts - 1) + kRightObeliskH;
+		rightLightningPts[i].y = (rightDeltaV * i) / (kNumLightningPts - 1) + kRightObeliskV;
+	}
+
+	range = kWander * 2 + 1;					// Randomly scatter the points verticallyÉ
+	for (i = 1; i < kNumLightningPts - 1; i++)	// but NOT the 1st or last points.
+	{
+		leftLightningPts[i].x += RandomInt(range) - kWander;
+		rightLightningPts[i].x += RandomInt(range) - kWander;
+	}
 
 
 	

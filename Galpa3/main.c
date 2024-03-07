@@ -2,50 +2,43 @@
 
 
 
-Entity torch;
-Entity player;
+
 
 App app;
 int main(int argc, char* argv[])
 {
-	int mouseX = 0;
-	int mouseY = 0;
+
 	memset(&app, 0, sizeof(App));
 
-	memset(&player, 0, sizeof(Entity));
+	//memset(&player, 0, sizeof(Entity));
 
 	initSDL();
 	int i = 0;
 	InitVariables();
-	player.x = 0;
-	player.y = 0;
-	player.texture = loadTexture("Img/130.bmp");
+
+	SDL_Texture* backSrcMapA =  loadTexture("Img/130.bmp");
+	SDL_QueryTexture(backSrcMapA, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
 	SDL_Texture* flameSrcMap = loadTexture(kFlamePictID);
 	SDL_Texture* obeliskSrcMap = loadTexture(kObeliskPictID);
-	SDL_Point punto1;
-	punto1.x = 0;
-	punto1.y = 0;
-	SDL_Point punto2;
-	punto2.x = 100;
-	punto2.y = 100;
+	
 	LogNextTick(100);
 	
-	
+	Spark = false;
 
 
 	//atexit(cleanup);
 
 	while (1)
 	{
-		SDL_GetMouseState(&mouseX, &mouseY);
-
+		printf("%d", Spark);
 		prepareScene();
 		
 		doInput();
 
-		blit(player.texture,  player.x, player.y);
+		//blit(player.texture,  player.x, player.y);
 		
-
+		SDL_RenderCopy(app.renderer, backSrcMapA, &backSrcRect,
+			&backSrcRect);
 
 		if (flameSrcRect.y > 32)
 			flameSrcRect.y = 0;
@@ -58,9 +51,9 @@ int main(int argc, char* argv[])
 		RenderTorchB();
 
 		//SDL_RenderDrawLine(app.renderer, punto1.x, punto1.y, punto2.x, punto2.y);
-		GenerateLightning(mouseX, mouseY);
-		SDL_RenderDrawLines(app.renderer, leftLightningPts, 8);
-		SDL_RenderDrawLines(app.renderer, rightLightningPts, 8);
+		
+		StrikeLightning(); //Dibuja los rayos
+
 		
 		//WaitForNextTick();
 		
@@ -79,14 +72,17 @@ int main(int argc, char* argv[])
 		
 		WaitForNextTick();
 		LogNextTick(50);
-		/*
-		OffsetRect(&obSrcRect, 0, 0);
-		SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
-			&obeliskRects[2]);
-		OffsetRect(&obSrcRect, 0, 209);
-		SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
-			&obeliskRects[3]);
-		*/
+		if (Spark == true)
+		{
+			OffsetRect(&obSrcRect, 0, 0);
+			SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
+				&obeliskRects[2]);
+			OffsetRect(&obSrcRect, 0, 209);
+			SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
+				&obeliskRects[3]);
+		}
+
+
 		WaitForNextTick();
 		
 		LogNextTick(50);

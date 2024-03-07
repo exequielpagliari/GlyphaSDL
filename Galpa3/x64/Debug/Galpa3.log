@@ -1,5 +1,6 @@
-﻿  main.c
-C:\Users\exepa\source\repos\Galpa3\Galpa3\common.h(15,18): warning C4013: 'SDL_GetTicks' undefined; assuming extern returning int
-C:\vlib\SDL2-2.26.5\include\SDL_timer.h(58,50): warning C4142: 'SDL_GetTicks': benign redefinition of type
-C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(13,2): warning C4013: 'memset' undefined; assuming extern returning int
+﻿  draw.c
+  input.c
+C:\Users\exepa\source\repos\Galpa3\Galpa3\input.c(17,4): warning C4013: 'LogNextTick' undefined; assuming extern returning int
+C:\Users\exepa\source\repos\Galpa3\Galpa3\input.c(21,4): warning C4013: 'WaitForNextTick' undefined; assuming extern returning int
+  Generating Code...
   Galpa3.vcxproj -> C:\Users\exepa\source\repos\Galpa3\x64\Debug\Galpa3.exe

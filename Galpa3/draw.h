@@ -22,6 +22,8 @@ void OffsetRect(SDL_Rect *rect, int x, int y);
 
 extern SDL_Rect		mainWindowRect, backSrcRect, workSrcRect, obSrcRect, playerSrcRect;
 extern SDL_Rect flameSrcRect, flameDestRects[2], flameRects[4];
+extern SDL_Rect	obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11];
+extern SDL_Texture* backSrcMapA;
 extern SDL_Texture* flameSrcMap;
 extern SDL_Texture* obeliskSrcMap;
 extern SDL_Point leftLightningPts[kNumLightningPts] , rightLightningPts[kNumLightningPts];
@@ -31,6 +33,8 @@ extern SDL_Point leftLightningPts[kNumLightningPts] , rightLightningPts[kNumLigh
 void RenderTorchA(void);
 void RenderTorchB(void);
 void GenerateLightning(short h, short v);
+void StrikeLightning(void);
+void FlashObelisks(bool flashThem);
 
 
 short Random();

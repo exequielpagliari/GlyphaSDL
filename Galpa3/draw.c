@@ -165,3 +165,44 @@ void GenerateLightning(short h, short v)
 
 	
 }
+
+
+
+//--------------------------------------------------------------  FlashObelisks
+
+// This function either draws the obelisks "normal" or draws them inverted.
+// They're drawn "inverted" as if emanating energy or lit up by the bolts…
+// of lightning.  The flag "flashThem" specifies how to draw them.
+
+void FlashObelisks(bool flashThem)
+{
+	if (flashThem)		// Draw them "inverted"
+	{
+		SDL_RenderCopy(app.renderer, backSrcMapA, &backSrcRect,
+			&backSrcRect);
+
+		SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
+			&obeliskRects[0]);
+
+		SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
+			&obeliskRects[1]);
+
+		SDL_RenderCopy(app.renderer, backSrcMapA, &backSrcRect,
+			&backSrcRect);
+
+		presentScene();
+
+		//LogNextTick(2);
+		//WaitForNextTick();
+		
+	}
+
+
+}
+
+
+void StrikeLightning(void)
+{
+	SDL_RenderDrawLines(app.renderer, leftLightningPts, 8);
+	SDL_RenderDrawLines(app.renderer, rightLightningPts, 8);
+}

@@ -42,8 +42,8 @@ void InitVariables(void)
 {
     short		i;
     
-
-    
+    SetRect(&workSrcRect, 0, 0, 640, 480);
+    SetRect(&mainWindowRect, 0, 0, 640, 480);
     SetRect(&flameSrcRect, 0, 0, 16, 16);
     SetRect(&flameDestRects[0], 87, 325, 16, 16);
     SetRect(&flameDestRects[1], 535, 325, 16, 16);

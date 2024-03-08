@@ -22,7 +22,7 @@ void doInput(void) {
 			StrikeLightning();
 			LogNextTick(15);
 			WaitForNextTick();
-			//PlayExternalSound(kLightningSound, kLightningPriority);
+			playSound(SND_PLAYER_FIRE, CH_PLAYER);
 			LogNextTick(15);
 			GenerateLightning(mouseX, mouseY);
 			StrikeLightning();

@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
 	//memset(&player, 0, sizeof(Entity));
 
 	initSDL();
+	initSounds();
 	int i = 0;
 	InitVariables();
 

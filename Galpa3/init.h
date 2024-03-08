@@ -4,6 +4,8 @@
 
 
 #include <SDL_image.h>
+#include <SDL_Mixer.h>
+#include <SDL_audio.h>
 #include <SDL.h>
 #include <stdio.h>
 #include <stdlib.h>

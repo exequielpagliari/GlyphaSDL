@@ -2,7 +2,8 @@
 
 
 
-
+Textures back;
+Textures obThunder;
 
 App app;
 int main(int argc, char* argv[])
@@ -14,13 +15,14 @@ int main(int argc, char* argv[])
 
 	initSDL();
 	initSounds();
-	int i = 0;
 	InitVariables();
+	int i = 0;	
 
-	SDL_Texture* backSrcMapA =  loadTexture("Img/130.bmp");
-	SDL_QueryTexture(backSrcMapA, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
+
 	SDL_Texture* flameSrcMap = loadTexture(kFlamePictID);
-	SDL_Texture* obeliskSrcMap = loadTexture(kObeliskPictID);
+
+	
+
 	
 	LogNextTick(100);
 	
@@ -38,8 +40,9 @@ int main(int argc, char* argv[])
 
 		//blit(player.texture,  player.x, player.y);
 		
-		SDL_RenderCopy(app.renderer, backSrcMapA, &backSrcRect,
+		SDL_RenderCopy(app.renderer, back.texture, &backSrcRect,
 			&backSrcRect);
+
 
 		if (flameSrcRect.y > 32)
 			flameSrcRect.y = 0;
@@ -100,3 +103,34 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+
+
+void InitVariables(void)
+{
+	short		i;
+
+
+	back.texture = loadTexture("Img/130.bmp");
+	SDL_QueryTexture(back.texture, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
+	
+	SDL_Texture* flameSrcMap = loadTexture(kFlamePictID);
+	obThunder.texture = loadTexture(kObeliskPictID);
+	//SDL_Texture* obeliskSrcMap = loadTexture(kObeliskPictID);
+
+	SetRect(&workSrcRect, 0, 0, 640, 480);
+	SetRect(&mainWindowRect, 0, 0, 640, 480);
+	SetRect(&flameSrcRect, 0, 0, 16, 16);
+	SetRect(&flameDestRects[0], 87, 325, 16, 16);
+	SetRect(&flameDestRects[1], 535, 325, 16, 16);
+
+	SetRect(&obSrcRect, 0, 0, 20, 209);
+	SetRect(&obeliskRects[0], 0, 0, 20, 209);
+	OffsetRect(&obeliskRects[0], 0, 0);
+	SetRect(&obeliskRects[1], 0, 0, 20, 209);
+	OffsetRect(&obeliskRects[1], 0, 209);
+	SetRect(&obeliskRects[2], 0, 0, 20, 209);
+	OffsetRect(&obeliskRects[2], 161, 250);
+	SetRect(&obeliskRects[3], 0, 0, 20, 209);
+	OffsetRect(&obeliskRects[3], 457, 250);
+};

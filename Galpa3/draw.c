@@ -174,27 +174,46 @@ void GenerateLightning(short h, short v)
 // They're drawn "inverted" as if emanating energy or lit up by the bolts…
 // of lightning.  The flag "flashThem" specifies how to draw them.
 
+
+Textures back;
+Textures obThunder;
+
 void FlashObelisks(bool flashThem)
 {
+	
 	if (flashThem)		// Draw them "inverted"
 	{
-		SDL_RenderCopy(app.renderer, backSrcMapA, &backSrcRect,
+
+
+		SDL_RenderCopy(app.renderer, back.texture, &backSrcRect,
 			&backSrcRect);
 
-		SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
-			&obeliskRects[0]);
+		SDL_QueryTexture(back.texture, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
 
-		SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
-			&obeliskRects[1]);
+		SDL_RenderCopy(app.renderer, obThunder.texture, &obSrcRect,
+			&obeliskRects[2]);
 
-		SDL_RenderCopy(app.renderer, backSrcMapA, &backSrcRect,
-			&backSrcRect);
+		SDL_RenderCopy(app.renderer, obThunder.texture, &obSrcRect,
+			&obeliskRects[3]);
 
-		presentScene();
+
+
+		
 
 		//LogNextTick(2);
 		//WaitForNextTick();
 		
+	}
+	else
+	{
+		presentScene();
+		// Restaurar el render target predeterminado
+		SDL_SetRenderTarget(app.renderer, NULL);
+		SDL_RenderClear(app.renderer);
+		SDL_RenderCopy(app.renderer, back.texture, &backSrcRect,
+			&backSrcRect);
+
+		SDL_QueryTexture(back.texture, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
 	}
 
 
@@ -203,6 +222,34 @@ void FlashObelisks(bool flashThem)
 
 void StrikeLightning(void)
 {
+	short i;
+	/*
 	SDL_RenderDrawLines(app.renderer, leftLightningPts, 8);
 	SDL_RenderDrawLines(app.renderer, rightLightningPts, 8);
+	*/
+	SDL_SetRenderDrawColor(app.renderer, 255, 255, 0, 255);
+
+
+	for (i = 0; i < kNumLightningPts - 1; i++)	// Draw left lightning bolt.
+	{
+		
+		SDL_RenderDrawLine(app.renderer, leftLightningPts[i].x, leftLightningPts[i].y, leftLightningPts[i + 1].x - 1, leftLightningPts[i + 1].y);
+	}
+	
+
+	for (i = 0; i < kNumLightningPts - 1; i++)	// Draw right lightning bolt.
+	{
+		SDL_RenderDrawLine(app.renderer, rightLightningPts[i].x, rightLightningPts[i].y, rightLightningPts[i + 1].x - 1, rightLightningPts[i + 1].y);
+	}
+	
+
+
+}
+
+void PenNormal(void)
+{
+	SDL_RenderCopy(app.renderer, back.texture, &backSrcRect,
+		&backSrcRect);
+
+	SDL_QueryTexture(back.texture, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
 }

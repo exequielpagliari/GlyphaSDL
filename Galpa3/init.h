@@ -20,5 +20,5 @@ extern SDL_Texture* backSrcMapA;
 extern SDL_Texture* flameSrcMap;
 extern	SDL_Texture* obeliskSrcMap;
 void initSDL(void);
-void InitVariables(void);
+
 #endif // INIT_H

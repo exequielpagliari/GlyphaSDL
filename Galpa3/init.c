@@ -49,26 +49,7 @@ void initSDL(void) {
     Mix_AllocateChannels(MAX_SND_CHANNELS);
 }
 
-void InitVariables(void)
-{
-    short		i;
-    
-    SetRect(&workSrcRect, 0, 0, 640, 480);
-    SetRect(&mainWindowRect, 0, 0, 640, 480);
-    SetRect(&flameSrcRect, 0, 0, 16, 16);
-    SetRect(&flameDestRects[0], 87, 325, 16, 16);
-    SetRect(&flameDestRects[1], 535, 325, 16, 16);
 
-    SetRect(&obSrcRect, 0, 0, 20, 209);
-    SetRect(&obeliskRects[0], 0, 0, 20, 209);
-    OffsetRect(&obeliskRects[0], 0, 0);
-    SetRect(&obeliskRects[1], 0, 0, 20, 209);
-    OffsetRect(&obeliskRects[1], 0, 209);
-    SetRect(&obeliskRects[2], 0, 0, 20, 209);
-    OffsetRect(&obeliskRects[2], 161, 250);
-    SetRect(&obeliskRects[3], 0, 0, 20, 209);
-    OffsetRect(&obeliskRects[3], 457, 250);
-};
 
 
 //SetRect(&flameSrcRect, 0, 0, 16, 64);

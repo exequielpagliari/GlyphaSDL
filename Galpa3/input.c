@@ -14,16 +14,16 @@ void doInput(void) {
             
 			Spark = true;
 			FlashObelisks(true);					// Do lightning animation.
-			LogNextTick(15);							// Lightning will hit cursor location.
+			LogNextTick(50);							// Lightning will hit cursor location.
 			SDL_GetMouseState(&mouseX, &mouseY);
 			GenerateLightning(mouseX, mouseY);
 			StrikeLightning();
 			WaitForNextTick();
 			StrikeLightning();
-			LogNextTick(15);
+			LogNextTick(50);
 			WaitForNextTick();
 			playSound(SND_PLAYER_FIRE, CH_PLAYER);
-			LogNextTick(15);
+			LogNextTick(50);
 			GenerateLightning(mouseX, mouseY);
 			StrikeLightning();
 			WaitForNextTick();
@@ -37,7 +37,7 @@ void doInput(void) {
 			StrikeLightning();
 			LogNextTick(2);
 			WaitForNextTick();
-			//PlayExternalSound(kLightningSound, kLightningPriority);
+			playSound(SND_PLAYER_FIRE, CH_PLAYER);//PlayExternalSound(kLightningSound, kLightningPriority);
 			LogNextTick(3);
 			GenerateLightning(mouseX, mouseY);
 			StrikeLightning();

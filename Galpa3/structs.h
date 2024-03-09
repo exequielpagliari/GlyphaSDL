@@ -28,4 +28,9 @@ typedef struct {
 	Entity fighterHead, * fighterTail;
 	Entity bulletHead, * bulletTail;
 } Stage;
+
+
+typedef struct Textures {
+	SDL_Texture* texture;
+} Textures;
 #endif // STRUCTS_H

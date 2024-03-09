@@ -23,4 +23,7 @@ SDL_Texture* obeliskSrcMap;
 SDL_Point leftLightningPts[kNumLightningPts], rightLightningPts[kNumLightningPts];
 extern	int		tickNext;
 bool Spark = false;
+
+
+void InitVariables(void);
 #endif // MAIN_H

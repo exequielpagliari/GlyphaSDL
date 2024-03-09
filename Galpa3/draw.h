@@ -1,6 +1,7 @@
 #ifndef DRAW_H
 #define DRAW_H
 
+
 #include "defs.h"
 #include <SDL.h>
 #include <structs.h>
@@ -35,7 +36,10 @@ void RenderTorchB(void);
 void GenerateLightning(short h, short v);
 void StrikeLightning(void);
 void FlashObelisks(bool flashThem);
+void PenNormal(void);
 
+
+Textures back;
 
 short Random();
 void CreateSeed(void);

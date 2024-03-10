@@ -76,15 +76,7 @@ int main(int argc, char* argv[])
 		
 		WaitForNextTick();
 		LogNextTick(50);
-		if (Spark == true)
-		{
-			OffsetRect(&obSrcRect, 0, 0);
-			SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
-				&obeliskRects[2]);
-			OffsetRect(&obSrcRect, 0, 209);
-			SDL_RenderCopy(app.renderer, obeliskSrcMap, &obSrcRect,
-				&obeliskRects[3]);
-		}
+		
 
 
 		WaitForNextTick();

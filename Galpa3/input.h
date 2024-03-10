@@ -15,5 +15,6 @@
 
 
 void doInput(void);
+void HandleMouseEvent(void);
 extern bool Spark;
 #endif // INPUT_H

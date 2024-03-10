@@ -200,8 +200,9 @@ void FlashObelisks(bool flashThem)
 
 		
 
-		//LogNextTick(2);
-		//WaitForNextTick();
+		LogNextTick(2);
+		WaitForNextTick();
+
 		
 	}
 	else
@@ -223,27 +224,26 @@ void FlashObelisks(bool flashThem)
 void StrikeLightning(void)
 {
 	short i;
-	/*
-	SDL_RenderDrawLines(app.renderer, leftLightningPts, 8);
-	SDL_RenderDrawLines(app.renderer, rightLightningPts, 8);
-	*/
-	SDL_SetRenderDrawColor(app.renderer, 255, 255, 0, 255);
+
 
 
 	for (i = 0; i < kNumLightningPts - 1; i++)	// Draw left lightning bolt.
 	{
 		
 		SDL_RenderDrawLine(app.renderer, leftLightningPts[i].x, leftLightningPts[i].y, leftLightningPts[i + 1].x - 1, leftLightningPts[i + 1].y);
+		presentScene();
 	}
 	
 
 	for (i = 0; i < kNumLightningPts - 1; i++)	// Draw right lightning bolt.
 	{
+
 		SDL_RenderDrawLine(app.renderer, rightLightningPts[i].x, rightLightningPts[i].y, rightLightningPts[i + 1].x - 1, rightLightningPts[i + 1].y);
+		presentScene();
 	}
 	
 
-
+	
 }
 
 void PenNormal(void)

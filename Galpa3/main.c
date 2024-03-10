@@ -1,7 +1,7 @@
 #include "main.h"
 
 
-
+Textures flameSrcMap;
 Textures back;
 Textures obThunder;
 
@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	int i = 0;	
 
 
-	SDL_Texture* flameSrcMap = loadTexture(kFlamePictID);
+	
 
 	
 
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 		
 		doInput();
 
-		//blit(player.texture,  player.x, player.y);
+
 		
 		SDL_RenderCopy(app.renderer, back.texture, &backSrcRect,
 			&backSrcRect);
@@ -47,16 +47,16 @@ int main(int argc, char* argv[])
 		if (flameSrcRect.y > 32)
 			flameSrcRect.y = 0;
 
-		SDL_RenderCopy(app.renderer, flameSrcMap, &flameSrcRect,
+		SDL_RenderCopy(app.renderer, flameSrcMap.texture, &flameSrcRect,
 			&flameDestRects[0]);
-		SDL_RenderCopy(app.renderer, flameSrcMap, &flameSrcRect,
+		SDL_RenderCopy(app.renderer, flameSrcMap.texture, &flameSrcRect,
 			&flameDestRects[1]);
 		RenderTorchA();
 		RenderTorchB();
 
 		//SDL_RenderDrawLine(app.renderer, punto1.x, punto1.y, punto2.x, punto2.y);
 		
-		StrikeLightning(); //Dibuja los rayos
+		
 
 		
 		//WaitForNextTick();
@@ -106,31 +106,3 @@ int main(int argc, char* argv[])
 
 
 
-void InitVariables(void)
-{
-	short		i;
-
-
-	back.texture = loadTexture("Img/130.bmp");
-	SDL_QueryTexture(back.texture, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
-	
-	SDL_Texture* flameSrcMap = loadTexture(kFlamePictID);
-	obThunder.texture = loadTexture(kObeliskPictID);
-	//SDL_Texture* obeliskSrcMap = loadTexture(kObeliskPictID);
-
-	SetRect(&workSrcRect, 0, 0, 640, 480);
-	SetRect(&mainWindowRect, 0, 0, 640, 480);
-	SetRect(&flameSrcRect, 0, 0, 16, 16);
-	SetRect(&flameDestRects[0], 87, 325, 16, 16);
-	SetRect(&flameDestRects[1], 535, 325, 16, 16);
-
-	SetRect(&obSrcRect, 0, 0, 20, 209);
-	SetRect(&obeliskRects[0], 0, 0, 20, 209);
-	OffsetRect(&obeliskRects[0], 0, 0);
-	SetRect(&obeliskRects[1], 0, 0, 20, 209);
-	OffsetRect(&obeliskRects[1], 0, 209);
-	SetRect(&obeliskRects[2], 0, 0, 20, 209);
-	OffsetRect(&obeliskRects[2], 161, 250);
-	SetRect(&obeliskRects[3], 0, 0, 20, 209);
-	OffsetRect(&obeliskRects[3], 457, 250);
-};

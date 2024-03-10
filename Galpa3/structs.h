@@ -32,5 +32,5 @@ typedef struct {
 
 typedef struct Textures {
 	SDL_Texture* texture;
-} Textures;
+}   Textures;
 #endif // STRUCTS_H

@@ -3,50 +3,15 @@
 App app;
 void doInput(void) {
     SDL_Event event;
-    int mouseX = 0;
-    int mouseY = 0;
+    
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
         case SDL_QUIT:
             exit(0);
         case SDL_MOUSEBUTTONUP:
-
+			HandleMouseEvent();
             
-			Spark = true;
-			FlashObelisks(true);					// Do lightning animation.
-			LogNextTick(50);							// Lightning will hit cursor location.
-			SDL_GetMouseState(&mouseX, &mouseY);
-			GenerateLightning(mouseX, mouseY);
-			StrikeLightning();
-			WaitForNextTick();
-			StrikeLightning();
-			LogNextTick(50);
-			WaitForNextTick();
-			playSound(SND_PLAYER_FIRE, CH_PLAYER);
-			LogNextTick(50);
-			GenerateLightning(mouseX, mouseY);
-			StrikeLightning();
-			WaitForNextTick();
-			StrikeLightning();
-			LogNextTick(2);
-			WaitForNextTick();
-			LogNextTick(3);
-			GenerateLightning(mouseX, mouseY);
-			StrikeLightning();
-			WaitForNextTick();
-			StrikeLightning();
-			LogNextTick(2);
-			WaitForNextTick();
-			playSound(SND_PLAYER_FIRE, CH_PLAYER);//PlayExternalSound(kLightningSound, kLightningPriority);
-			LogNextTick(3);
-			GenerateLightning(mouseX, mouseY);
-			StrikeLightning();
-			WaitForNextTick();
-			StrikeLightning();
-			LogNextTick(2);
-			WaitForNextTick();
-			FlashObelisks(false);
-			Spark = false;
+			
 
             break;
         case SDL_KEYDOWN:
@@ -59,3 +24,49 @@ void doInput(void) {
         }
     }
 }
+
+
+
+
+
+
+void HandleMouseEvent(void)
+{
+	int mouseX = 0;
+	int mouseY = 0;
+
+	FlashObelisks(true);					// Do lightning animation.
+	LogNextTick(50);							// Lightning will hit cursor location.
+	SDL_GetMouseState(&mouseX, &mouseY);
+	GenerateLightning(mouseX, mouseY);
+	StrikeLightning();
+	WaitForNextTick();
+	StrikeLightning();
+	LogNextTick(50);
+	WaitForNextTick();
+	playSound(SND_PLAYER_FIRE, CH_PLAYER);//PlayExternalSound(kLightningSound, kLightningPriority);
+	LogNextTick(50);
+	GenerateLightning(mouseX, mouseY);
+	StrikeLightning();
+	WaitForNextTick();
+	StrikeLightning();
+	LogNextTick(2);
+	WaitForNextTick();
+	LogNextTick(3);
+	GenerateLightning(mouseX, mouseY);
+	StrikeLightning();
+	WaitForNextTick();
+	StrikeLightning();
+	LogNextTick(2);
+	WaitForNextTick();
+	playSound(SND_PLAYER_FIRE, CH_PLAYER);//PlayExternalSound(kLightningSound, kLightningPriority);
+	LogNextTick(3);
+	GenerateLightning(mouseX, mouseY);
+	StrikeLightning();
+	WaitForNextTick();
+	StrikeLightning();
+	LogNextTick(2);
+	WaitForNextTick();
+	FlashObelisks(false);
+
+};

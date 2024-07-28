@@ -52,7 +52,7 @@ void initSDL(void) {
 
 void InitVariables(void)
 {
-    short		i;
+    int		i = 0;
 
 
     back.texture = loadTexture("Img/130.bmp");

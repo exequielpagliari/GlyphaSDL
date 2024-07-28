@@ -1,6 +1,0 @@
-﻿  main.c
-C:\Users\exepa\source\repos\Galpa3\Galpa3\common.h(15,18): warning C4013: 'SDL_GetTicks' undefined; assuming extern returning int
-C:\vlib\SDL2-2.26.5\include\SDL_timer.h(58,50): warning C4142: 'SDL_GetTicks': benign redefinition of type
-C:\Users\exepa\source\repos\Galpa3\Galpa3\main.c(12,2): warning C4013: 'memset' undefined; assuming extern returning int
-  LINK : C:\Users\exepa\source\repos\Galpa3\x64\Debug\Galpa3.exe not found or not built by the last incremental link; performing full link
-  Galpa3.vcxproj -> C:\Users\exepa\source\repos\Galpa3\x64\Debug\Galpa3.exe

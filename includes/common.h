@@ -5,20 +5,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-int		tickNext = 0;
+unsigned int		tickNext = 0;
 
-// AquÌ puedes incluir cualquier encabezado com˙n necesario para tu proyecto
+// Aqu√≠ puedes incluir cualquier encabezado com√∫n necesario para tu proyecto
 
 
 void LogNextTick(int howMany)
 {
-	tickNext = (int)SDL_GetTicks() + howMany;		// Get machine's TickCount() and add to it.
+	tickNext = SDL_GetTicks() + howMany;		// Get machine's TickCount() and add to it.
 }
 
 //--------------------------------------------------------------  WaitForNextTick
 
 // This is the companion function to the above function (LogNextTick()).
-// We do nothing but loop until TickCount() catches up with (or passes) our…
+// We do nothing but loop until TickCount() catches up with (or passes) our√â
 // global variable tickNext.
 
 void WaitForNextTick(void)
@@ -27,7 +27,7 @@ void WaitForNextTick(void)
 	{
 		//printf(("%d\n"), tickNext);
 		//printf(("%d\n"),SDL_GetTicks);
-	} while ((int)SDL_GetTicks() < tickNext);			// Loop until TickCount() catches up.
+	} while (SDL_GetTicks() < tickNext);			// Loop until TickCount() catches up.
 }
 
 #endif // COMMON_H;

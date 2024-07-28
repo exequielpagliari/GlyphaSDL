@@ -21,7 +21,7 @@ SDL_Texture* backSrcMapA;
 SDL_Texture* obeliskSrcMap;
 
 SDL_Point leftLightningPts[kNumLightningPts], rightLightningPts[kNumLightningPts];
-extern	int		tickNext;
+extern	unsigned int		tickNext;
 bool Spark = false;
 
 

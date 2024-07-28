@@ -34,4 +34,4 @@ add_executable(SDL2Test WIN32 	main.c
 				includes/common.h
 				)
 
-target_link_libraries(SDL2Test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+target_link_libraries(SDL2Test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_mixer_LIBRARIES})

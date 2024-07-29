@@ -61,4 +61,4 @@ jobs:
     - name: Configure CMake
       run: cmake -B build ${{ matrix.os }}
     - name: Build
-      run: cmake --build build/
+      run: cmake VERBOSE=1 --build build/

@@ -59,6 +59,6 @@ jobs:
     - name: Get project sources
       uses: actions/checkout@v3
     - name: Configure CMake
-      run: cmake -B build ${{ matrix.os }} --help
+      run: cmake -B build ${{ matrix.os }} --debug-output
     - name: Build
-      run: cmake --build build/
+      run: cmake --build /build

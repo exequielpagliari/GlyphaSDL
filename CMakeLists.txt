@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(SDL2Test)
+project(GlyphaSDL)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
@@ -34,4 +34,4 @@ add_executable(SDL2Test WIN32 	main.c
 				includes/common.h
 				)
 
-target_link_libraries(SDL2Test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})
+target_link_libraries(GlyphaSDL ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})

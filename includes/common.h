@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <SDL.h>
 
 int		tickNext = 0;
 void LogNextTick(int howMany);

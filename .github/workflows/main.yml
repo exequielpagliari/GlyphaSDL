@@ -1,0 +1,50 @@
+name: "Setup SDL"
+description: "Set up SDL and add the path of SDLx.dll to the PATH (if platform is Windows)."
+inputs:
+  version:
+    description: "Required version of SDL (2.x.y, 2-latest, 2-HEAD, 3-HEAD)"
+    default: "2-latest"
+    required: true
+    # 2.x.y: version 2.x.y
+    # 2-latest:  latest SDL2 release
+    # 2-head: latest SDL2 main
+    # 3-head: latest SDL3 main
+  cmake_toolchain:
+    description: "Path of CMake toolchain file"
+outputs:
+  root:
+    description: "The root of the SDL package"
+  pkgconfig:
+    description: "Folder containing sdlx.pc"
+    
+steps:
+   1. Calculate corresponding SDL git hash of ${{inputs.version}}
+   2. Summarize the compiler so we are somewhat confident the cache will fetch the correct cached SDLx
+      if inputs.cmake_toolchain is None:
+        - on Windows, assume MSVC
+          (compiler_props={compiler: "MSVC", version: ${version}, os: Windows})
+        - on Linux+Macos: if set, use env.CC/env.CXX. Else, use /usr/bin/cc and /usr/bin/c++.
+          (compiler_props={compiler: {cc_version: $(cc --version), cxx_version: $(c++ --version), cflags: env.CFLAGS, cxxflags: env.CXXFLAGS})
+      else:
+        - use toolchain file
+          (compiler_props=${cmake_toolchain: READ(${{inputs.cmake_toolchain}})})
+   2. Calculate cache-key: "sdl-setup-" + HASH({
+        os: ${{runner.os}},
+        compiler_props: ${compiler_props},
+        sdl_version: $corresponding_git_hash,
+      })
+   3. Try fetching cached setup-sdl
+   4. if cache hit:
+         extract cache to /setup-sdl/$corresponding_git_hash/package
+         GOTO STEP 12
+   5. fetch SDL commit $corresponding_git_hash to SRCDIR=/setup-sdl/$corresponding_git_hash/src 
+   6. Ensure existance of CMake toolchain file (create one for the case where none was passed in inputs.cmake_toolchain)
+   7. Setup ninja
+   8. Execute "cmake -S $SRCDIR -B/setup-sdl/$corresponding_git_hash/build -DCMAKE_TOOLCHAIN_FILE=$setupsdl_cmake_toolchain_file -GNinja -DSDL_SHARED=ON -DSDL_STATIC=ON -DSDL_TEST=ON -DSDL_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_INCLUDEDIR=include -DCMAKE_PREFIX_PATH=/setup-sdl/$corresponding_git_hash/package"
+   9. Execute "cmake --build /setup-sdl/$corresponding_git_hash/build"
+  10. Execute "cmake --install /setup-sdl/$corresponding_git_hash/build"
+  11. Cache /setup-sdl/$corresponding_git_hash/package
+  12. if github.runner == "Windows":
+         add C:\setup-sdl\$corresponding_git_hash\package\bin to PATH
+  13. set outputs.root=\setup-sdl\$corresponding_git_hash\package
+  13. set outputs.pkg_config=\setup-sdl\$corresponding_git_hash\package\lib\pkgconfig

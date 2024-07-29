@@ -20,7 +20,7 @@ outputs:
 steps:
    1. Calculate corresponding SDL git hash of ${{inputs.version}}
    2. Summarize the compiler so we are somewhat confident the cache will fetch the correct cached SDLx
-      if inputs.cmake_toolchain is None:
+      if inputs.cmake_toolchain is None
         - on Windows, assume MSVC
           (compiler_props={compiler: "MSVC", version: ${version}, os: Windows})
         - on Linux+Macos: if set, use env.CC/env.CXX. Else, use /usr/bin/cc and /usr/bin/c++.

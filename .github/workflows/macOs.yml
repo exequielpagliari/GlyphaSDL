@@ -17,7 +17,7 @@ jobs:
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - name: Install dependencies
-        run: brew install cmake
+        run: brew install cmake sdl2 sdl2_image sdl2_mixer sdl2_ttf
       - name: Build SDL
         run: |
           mkdir build

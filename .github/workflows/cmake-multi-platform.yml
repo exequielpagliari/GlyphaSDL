@@ -62,3 +62,33 @@ jobs:
       run: cmake -B build ${{ matrix.os }} --debug-output   -DCMAKE_C_FLAGS=-fcommon
     - name: Build
       run: cmake --build build/
+
+
+      runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name:   
+ Download SDL2 binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: sdl2-dlls  # Replace with the artifact name containing SDL DLLs
+
+      - name: Extract SDL DLLs
+        run: |
+          mkdir dependencies
+          unzip -q ${{ runner.temp_dir }}/sdl2-dlls.zip -d dependencies
+
+      - name: Set environment variables
+        run: |
+          set SDL_INCLUDE_DIR=dependencies\include
+          set SDL_LIBRARY_DIR=dependencies\lib
+          set PATH=%PATH%;dependencies\lib
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_C_FLAGS=-fcommon
+
+      - name: Build
+        run: cmake --build build/

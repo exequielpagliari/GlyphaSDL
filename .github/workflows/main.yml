@@ -15,7 +15,7 @@ jobs:
       run: |
         sudo apt-add-repository ppa:hrzhu/sdl2-backport
         sudo apt-get update
-        sudo apt-get install ninja-build libsdl2-dev
+        sudo apt-get install ninja-build libsdl2-dev libsdl2-mixer-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-ttf-dev libsdl1.2-dev libsdl-mixer1.2-dev
 
     - name: CMake configure (Debug)
       run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug

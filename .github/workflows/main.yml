@@ -21,13 +21,9 @@ jobs:
       run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug
 
     - name: Build (Debug)
-      run: ninja -C debug
+      run: cmake --build /debug
 
-    - name: CMake configure (Release)
-      run: cmake -B release -G Ninja . -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-fcommon
 
-    - name: Build (Release)
-      run: ninja -C release
 
   macos:
     name: macOS (CMake)
@@ -47,7 +43,7 @@ jobs:
       run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fcommon
 
     - name: Build (Debug)
-      run: ninja -C debug
+      run: cmake --build /debug
 
     - name: CMake configure (Release)
       run: cmake -B release -G Ninja . -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-fcommon

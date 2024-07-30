@@ -41,7 +41,7 @@ jobs:
         submodules: true
 
     - name: Install dependencies
-      run: brew install ninja sdl2
+      run: brew install ninja sdl2 sdl2_image sdl2_mixer
 
     - name: CMake configure (Debug)
       run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug

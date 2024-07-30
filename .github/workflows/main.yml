@@ -24,7 +24,7 @@ jobs:
       run: ninja -C debug
 
     - name: CMake configure (Release)
-      run: cmake -B release -G Ninja . -DCMAKE_BUILD_TYPE=Release
+      run: cmake -B release -G Ninja . -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-fcommon
 
     - name: Build (Release)
       run: ninja -C release
@@ -44,13 +44,13 @@ jobs:
       run: brew install ninja sdl2 sdl2_image sdl2_mixer
 
     - name: CMake configure (Debug)
-      run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug
+      run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fcommon
 
     - name: Build (Debug)
       run: ninja -C debug
 
     - name: CMake configure (Release)
-      run: cmake -B release -G Ninja . -DCMAKE_BUILD_TYPE=Release
+      run: cmake -B release -G Ninja . -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-fcommon
 
     - name: Build (Release)
       run: ninja -C release
@@ -90,7 +90,7 @@ jobs:
           -DSDL2_LIBRARIES="SDL2;SDL2main"
 
     - name: Build (Debug)
-      run: cmake --build debug
+      run: cmake --build debug -DCMAKE_C_FLAGS=-fcommon
 
     - name: CMake configure (Release)
       run: |
@@ -101,7 +101,7 @@ jobs:
           -DSDL2_LIBRARIES="SDL2;SDL2main"
 
     - name: Build (Release)
-      run: cmake --build release
+      run: cmake --build release -DCMAKE_C_FLAGS=-fcommon
 
   windows-mingw:
     name: Windows (MinGW)

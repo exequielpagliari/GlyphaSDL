@@ -21,7 +21,7 @@ jobs:
       run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug
 
     - name: Build (Debug)
-      run: cmake --build /debug
+      run: cmake --build debug/
 
 
 
@@ -43,7 +43,7 @@ jobs:
       run: cmake -B debug -G Ninja . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fcommon
 
     - name: Build (Debug)
-      run: cmake --build /debug
+      run: cmake --build debug/
 
     - name: CMake configure (Release)
       run: cmake -B release -G Ninja . -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-fcommon

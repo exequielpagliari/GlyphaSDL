@@ -1,35 +1,39 @@
 #ifndef DRAW_H
 #define DRAW_H
 
+#pragma once
+
 
 #include "defs.h"
-#include <SDL.h>
-#include <structs.h>
+#include <SDL2/SDL.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <structs.h>
 #include <time.h>
 
-#define kNumLightningPts		8
-
+#define kNumLightningPts 8
+extern App app;
 void prepareScene(void);
 void presentScene(void);
-SDL_Texture* loadTexture(char* filename);
-void blit(SDL_Texture* texture, int x, int y);
-void blitRect(SDL_Texture* texture, SDL_Rect* src, int x, int y);
-void blitRectHW(SDL_Texture* texture, SDL_Rect* src, int x, int y, int w, int h, int frame);
+SDL_Texture *loadTexture(char *filename);
+void blit(SDL_Texture *texture, int x, int y);
+void blitRect(SDL_Texture *texture, SDL_Rect *src, int x, int y);
+void blitRectHW(SDL_Texture *texture, SDL_Rect *src, int x, int y, int w, int h,
+                int frame);
 void SetRect(SDL_Rect *rect, int x, int y, int w, int h);
 void OffsetRect(SDL_Rect *rect, int x, int y);
 
-extern SDL_Rect		mainWindowRect, backSrcRect, workSrcRect, obSrcRect, playerSrcRect;
+extern SDL_Rect mainWindowRect, backSrcRect, workSrcRect, obSrcRect,
+    playerSrcRect;
 extern SDL_Rect flameSrcRect, flameDestRects[2], flameRects[4];
-extern SDL_Rect	obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11];
-extern SDL_Texture* backSrcMapA;
-//extern SDL_Texture* flameSrcMap;
-extern SDL_Texture* obeliskSrcMap;
-extern SDL_Point leftLightningPts[kNumLightningPts] , rightLightningPts[kNumLightningPts];
-
-
+extern SDL_Rect obeliskRects[4], playerRects[11], numbersSrc[11],
+    numbersDest[11];
+extern SDL_Texture *backSrcMapA;
+// extern SDL_Texture* flameSrcMap;
+extern SDL_Texture *obeliskSrcMap;
+extern SDL_Point leftLightningPts[kNumLightningPts],
+    rightLightningPts[kNumLightningPts];
 
 void RenderTorchA(void);
 void RenderTorchB(void);
@@ -39,7 +43,7 @@ void FlashObelisks(bool flashThem);
 void PenNormal(void);
 
 
-Textures back;
+extern  Textures back;
 
 short Random();
 void CreateSeed(void);

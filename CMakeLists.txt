@@ -14,16 +14,16 @@ INCLUDE_DIRECTORIES("includes")
 INCLUDE_DIRECTORIES("Snd")
 INCLUDE_DIRECTORIES("Img")
 # Se añade el directorio a la ruta de búsqueda del compilador de turno
-FILE(GLOB MiProyecto_SRC "src/*.c")
-FILE(GLOB MiProyecto_SRC "includes/*.h")
+#FILE(GLOB MiProyecto_SRC "src/*.c")
+#FILE(GLOB MiProyecto_SRC "includes/*.h")
 # FILE GLOB selecciona todos los archivos que cumplan la característica y los almacena en MiProyecto_SRC
 # GLOB no es recursivo. Si lo necesitas, usa GLOB_RECURSE
 
 add_executable(SDL2Test WIN32 	main.c  
-			      	src/draw.c
+      	src/draw.c
 				includes/draw.h
-			      	src/init.c
-			      	includes/init.h
+      	src/init.c
+      	includes/init.h
 				src/input.c
 				includes/input.h
 				src/sound.c
@@ -32,6 +32,7 @@ add_executable(SDL2Test WIN32 	main.c
 				includes/defs.h
 				includes/structs.h
 				includes/common.h
-				)
+        src/Utilities.c
+)
 
 target_link_libraries(SDL2Test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})

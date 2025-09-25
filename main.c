@@ -1,5 +1,7 @@
 #include "main.h"
 
+#include "common.h"
+
 
 Textures flameSrcMap;
 Textures back;
@@ -11,19 +13,12 @@ int main(int argc, char* argv[])
 
 	memset(&app, 0, sizeof(App));
 
-	//memset(&player, 0, sizeof(Entity));
-
 	initSDL();
-	initSounds();
+//	initSounds();
 	InitVariables();
 	int i = 0;	
 
 
-	
-
-	
-
-	
 	LogNextTick(100);
 	
 	Spark = false;

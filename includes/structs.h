@@ -1,36 +1,34 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 typedef struct {
-    SDL_Renderer* renderer;
-    SDL_Window* window;
+  SDL_Renderer *renderer;
+  SDL_Window *window;
 } App;
 
 typedef struct {
-	int x;
-	int y;
-	SDL_Texture* texture;
+  int x;
+  int y;
+  SDL_Texture *texture;
 
 } Entity;
 
-
 typedef struct {
-	int x;
-	int y;
-	SDL_Texture* texture;
-	SDL_Rect* rect;
+  int x;
+  int y;
+  SDL_Texture *texture;
+  SDL_Rect *rect;
 
 } AnimateEntity;
 
 typedef struct {
-	Entity fighterHead, * fighterTail;
-	Entity bulletHead, * bulletTail;
+  Entity fighterHead, *fighterTail;
+  Entity bulletHead, *bulletTail;
 } Stage;
 
-
 typedef struct Textures {
-	SDL_Texture* texture;
-}   Textures;
+  SDL_Texture *texture;
+} Textures;
 #endif // STRUCTS_H

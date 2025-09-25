@@ -1,34 +1,25 @@
-#pragma once
+//#pragma once
 #ifndef COMMON_H
 #define COMMON_H
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <SDL.h>
-
-int		tickNext = 0;
-void LogNextTick(int howMany);
-// Aquí puedes incluir cualquier encabezado común necesario para tu proyecto
 
 
-void LogNextTick(int howMany)
-{
-	tickNext = (int)SDL_GetTicks() + howMany;		// Get machine's TickCount() and add to it.
-}
+void LogNextTick (int);
+void WaitForNextTick (void);
 
-//--------------------------------------------------------------  WaitForNextTick
+
+extern int tickNext;
+
+
+//-------------------------------------------------------------- WaitForNextTick
 
 // This is the companion function to the above function (LogNextTick()).
 // We do nothing but loop until TickCount() catches up with (or passes) ourÉ
 // global variable tickNext.
 
-void WaitForNextTick(void)
-{
-	do
-	{
-		//printf(("%d\n"), tickNext);
-		//printf(("%d\n"),SDL_GetTicks);
-	} while ((int)SDL_GetTicks() < tickNext);			// Loop until TickCount() catches up.
-}
+
 
 #endif // COMMON_H;

@@ -4,11 +4,11 @@
 #define SCREEN_WIDTH   640
 #define SCREEN_HEIGHT  460
 
-#define kHandPictID				128		// These are all the resource ID's forÉ
-#define kHandMaskID				129		// the various PICT's were going toÉ
-#define kBackgroundPictID		"Img/130.bmp"		// load up into offscreen pixmaps andÉ
+#define kHandPictID				128		// These are all the resource ID's forï¿½
+#define kHandMaskID				129		// the various PICT's were going toï¿½
+#define kBackgroundPictID		"../Img/130.bmp"		// load up into offscreen pixmaps andï¿½
 #define kHelpPictID				131		// offscreen bitmaps.
-#define kObeliskPictID			"Img/134.bmp"
+#define kObeliskPictID			"../Img/134.bmp"
 #define kPlayerPictID			135
 #define kPlayerMaskID			136
 #define kNumberPictID			137
@@ -17,7 +17,7 @@
 #define kEnemyFlyPictID			140
 #define kEnemyWalkMaskID		141
 #define kEnemyFlyMaskID			142
-#define kFlamePictID			"Img/143.bmp"
+#define kFlamePictID			"../Img/143.bmp"
 #define kEggPictID				144
 #define kEggMaskID				145
 #define kPlatformPictID			146

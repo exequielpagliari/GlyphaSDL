@@ -5,6 +5,7 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
+#include "CoreSDL/SDL_Utilities.h"
 
 #define	kPutInFront			(WindowPtr)-1L
 #define	kNormalUpdates		TRUE
@@ -91,20 +92,7 @@
 
 //--------------------------------------------------------------  Structs
 
-typedef enum { false, true, FALSE= 0, TRUE } Boolean;
-typedef unsigned char Str255[256];
-typedef unsigned char Str15[16];
 
-/* primary form */
-
-typedef struct
-{
-	short left;
-	short top;
-	short right;
-	short bottom;
-}
-Rect;
 
 typedef struct
 {
@@ -157,21 +145,6 @@ typedef struct
 	short		wasVolume;
 } prefsInfo;
 
-typedef struct {
-
-}GrafPort, *GrafPtr;
-
-typedef struct {
-
-}CGrafPort, *CGrafPtr;
-
-typedef struct {
-
-}String, *StringPtr;
-
-typedef struct {
-
-}Dialog, *DialogPtr;
 
 //--------------------------------------------------------------  Prototypes
 
@@ -251,7 +224,7 @@ void GetDialogNumFromStr (DialogPtr, short, long *);
 void DisableControl (DialogPtr, short);
 
 
-short Random();
+
 
 
 /*

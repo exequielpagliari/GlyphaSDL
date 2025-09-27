@@ -7,10 +7,11 @@
 #include <stddef.h>
 #include <SDL2/SDL_image.h>
 
+
 typedef enum { false, true, FALSE= 0, TRUE } Boolean;
 typedef unsigned char Str255[256];
 typedef unsigned char Str15[16];
-
+typedef void* Ptr;
 /* primary form */
 
 typedef struct
@@ -52,6 +53,13 @@ void ParamText(StringPtr,Str15,Str15,Str15);
 void ExitToShell(void);
 short Alert(int, short);
 GDHandle GetMainDevice(void);
+GDHandle GetGDevice(void);
+Ptr NewPtrClear(size_t size);
+Ptr NewPtr(size_t size);
+void SetGDevice(GDHandle handle);
+typedef struct OSErr {
+
+} OSErr;
 
 
 //----------------------------------------------------------
@@ -68,7 +76,7 @@ typedef struct HandleStruct {
 typedef HandleStruct** Handle;
 
 
-typedef struct MyPictureStruct {
+typedef struct PictureStruct {
 
     Rect picFrame;
     short picSize;
@@ -77,10 +85,19 @@ typedef struct MyPictureStruct {
 
 PicHandle GetPicture(int ResID);
 
+typedef struct {
+    void* baseAddr;
+    short rowBytes;
+    Rect bounds;
+} BitMap;
 
+typedef struct CTabHandle {
 
+} CTabHandle;
 
-
+void OffsetRect(Rect *rect, int x, int y);
+void DrawPicture(PicHandle pic, Rect *rect);
+void ReleaseResource(PicHandle);
 short Random(void);
 
 #endif //NEWCODE_SDL_UTILITIES_H

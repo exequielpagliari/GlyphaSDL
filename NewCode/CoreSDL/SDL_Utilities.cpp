@@ -43,3 +43,8 @@ void SetRect(Rect *rect, int x, int y, int w, int h) {
     rect->h = h;
     rect->w = w;
 }
+
+OSErr HandToHand(Handle *h) {
+    OSErr err;
+    return err;
+}

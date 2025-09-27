@@ -7,12 +7,20 @@
 #include <stddef.h>
 #include <SDL2/SDL_image.h>
 
-
+typedef uint8_t Color;
+#define blackColor  0x00000011;
+#define whiteColor  0x11111111;
 typedef enum { false, true, FALSE= 0, TRUE } Boolean;
 typedef unsigned char Str255[256];
 typedef unsigned char Str15[16];
 typedef void* Ptr;
+Boolean noErr = false;
 /* primary form */
+
+typedef struct PixMap {
+    int pixelSize;
+
+} PixMap;
 
 typedef struct
 {
@@ -26,15 +34,26 @@ typedef struct
 Rect;
 
 typedef struct {
+    short rgnSize;
+    Rect rgnBBox;
+    char rgnData[];
+}
+Region, *RgnPtr, **RgnHandle;
 
+typedef struct {
+    PixMap PixMap;
+    RgnHandle clipRgn;
+    RgnHandle visRgn;
 }GrafPort, *GrafPtr;
 
 typedef struct {
-
+    PixMap portPixMap;
+    RgnHandle clipRgn;
+    RgnHandle visRgn;
 }CGrafPort, *CGrafPtr;
 
 typedef struct {
-
+    PixMap portPixMap;
 }String, *StringPtr;
 
 typedef struct {
@@ -42,9 +61,11 @@ typedef struct {
 }Dialog, *DialogPtr;
 
 
-typedef struct GDHandle {
 
+typedef struct GDHandle {
+    PixMap portPixMap;
 }GDHandle;
+
 
 //----------------------------------------------------------
 //               Métodos MacOs Sistema
@@ -57,6 +78,7 @@ GDHandle GetGDevice(void);
 Ptr NewPtrClear(size_t size);
 Ptr NewPtr(size_t size);
 void SetGDevice(GDHandle handle);
+Boolean MemError(void);
 typedef struct OSErr {
 
 } OSErr;
@@ -95,9 +117,25 @@ typedef struct CTabHandle {
 
 } CTabHandle;
 
+
+
 void OffsetRect(Rect *rect, int x, int y);
 void DrawPicture(PicHandle pic, Rect *rect);
 void ReleaseResource(PicHandle);
+void HLock(Handle h);
+void HUnlock(Handle h);
+void OpenCPort(CGrafPtr h);
+void OpenPort(GrafPort *h);
+void CloseCPort(CGrafPtr h);
+OSErr HandToHand(Handle *h);
+void ClipRect(Rect *rect);
+void RectRgn(RgnHandle rgn, const Rect* rect);
+void ForeColor(uint8_t color);
+void BackColor(uint8_t color);
+void EraseRect(Rect *rect);
+void DisposePtr(Ptr *ptr);
+void SetPortBits(BitMap *bitMap);
 short Random(void);
+short TickCount(void);
 
 #endif //NEWCODE_SDL_UTILITIES_H

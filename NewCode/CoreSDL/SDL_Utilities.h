@@ -167,9 +167,9 @@ void DrawString(Str255 string);
 void ClosePort(GrafPtr graf_ptr);
 void SetPort(GrafPtr graf_ptr);
 short LMGetMBarHeight(void);
-
 Handle GetResource(Str15 str, short value);
 Byte HGetState(AlertTHndl h);
+void HSetState(Handle handle, Byte state);
 short Random(void);
 short TickCount(void);
 

@@ -10,6 +10,7 @@
 typedef uint8_t Color;
 #define blackColor  0x00000011;
 #define whiteColor  0x11111111;
+typedef char Byte;
 typedef enum { false, true, FALSE= 0, TRUE } Boolean;
 typedef unsigned char Str255[256];
 typedef unsigned char Str15[16];
@@ -21,6 +22,8 @@ typedef struct PixMap {
     int pixelSize;
 
 } PixMap;
+
+
 
 typedef struct
 {
@@ -34,6 +37,12 @@ typedef struct
 Rect;
 
 typedef struct {
+    void* baseAddr;
+    short rowBytes;
+    Rect bounds;
+} BitMap;
+
+typedef struct {
     short rgnSize;
     Rect rgnBBox;
     char rgnData[];
@@ -41,10 +50,13 @@ typedef struct {
 Region, *RgnPtr, **RgnHandle;
 
 typedef struct {
+    BitMap screenBits;
     PixMap PixMap;
     RgnHandle clipRgn;
     RgnHandle visRgn;
 }GrafPort, *GrafPtr;
+
+GrafPort qd;
 
 typedef struct {
     PixMap portPixMap;
@@ -84,6 +96,10 @@ typedef struct OSErr {
 } OSErr;
 
 
+
+
+
+
 //----------------------------------------------------------
 //               Métodos MacOs Dibujado
 //----------------------------------------------------------
@@ -93,10 +109,22 @@ typedef struct OSErr {
 typedef struct HandleStruct {
     void* ptr;
     int lockCount;
+    Rect boundsRect;
 } HandleStruct;
 
 typedef HandleStruct** Handle;
 
+typedef struct AlertTHndl {
+    Rect boundsRect;
+} alertTHndl;
+
+typedef HandleStruct **AlertTHndl;
+
+typedef struct dialogTHndl {
+
+} dialogTHndl;
+
+typedef HandleStruct **DialogTHndl;
 
 typedef struct PictureStruct {
 
@@ -107,11 +135,7 @@ typedef struct PictureStruct {
 
 PicHandle GetPicture(int ResID);
 
-typedef struct {
-    void* baseAddr;
-    short rowBytes;
-    Rect bounds;
-} BitMap;
+
 
 typedef struct CTabHandle {
 
@@ -135,6 +159,17 @@ void BackColor(uint8_t color);
 void EraseRect(Rect *rect);
 void DisposePtr(Ptr *ptr);
 void SetPortBits(BitMap *bitMap);
+void GetPort(GrafPtr *port);
+void NumToString(long value, Str255 string);
+void MoveTo(short x, short y);
+void SetRect(Rect *rect, int left, int top, int right , int bottom);
+void DrawString(Str255 string);
+void ClosePort(GrafPtr graf_ptr);
+void SetPort(GrafPtr graf_ptr);
+short LMGetMBarHeight(void);
+
+Handle GetResource(Str15 str, short value);
+Byte HGetState(AlertTHndl h);
 short Random(void);
 short TickCount(void);
 

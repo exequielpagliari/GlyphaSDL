@@ -6,8 +6,7 @@
 #define NEWCODE_SOUND_H
 
 
-class Sound {
-};
+
 
 
 #endif //NEWCODE_SOUND_H

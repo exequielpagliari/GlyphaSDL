@@ -8,26 +8,25 @@
 #include <SDL2/SDL_image.h>
 
 typedef uint8_t Color;
-#define blackColor  0x00000011;
-#define whiteColor  0x11111111;
+#define blackColor  0x00000011
+#define whiteColor  0x11111111
+#define ToolTrap 0
 typedef char Byte;
 typedef enum { false, true, FALSE= 0, TRUE } Boolean;
 typedef unsigned char Str255[256];
 typedef unsigned char Str15[16];
 typedef void* Ptr;
 Boolean noErr = false;
+
+typedef unsigned long OSType;
+
+typedef struct CTabHandle {
+
+} CTabHandle;
+
 /* primary form */
-
-typedef struct PixMap {
-    int pixelSize;
-
-} PixMap;
-
-
-
 typedef struct
 {
-
     short left;
     short top;
     short right;
@@ -35,6 +34,15 @@ typedef struct
     int picFrame;
 }
 Rect;
+
+typedef struct PixMap {
+    int pixelSize;
+    Ptr baseAddr;
+    short rowBytes;
+    Rect bounds;
+    CTabHandle pmTable;
+
+} PixMap, **PixMapHandle;
 
 typedef struct {
     void* baseAddr;
@@ -51,7 +59,7 @@ Region, *RgnPtr, **RgnHandle;
 
 typedef struct {
     BitMap screenBits;
-    PixMap PixMap;
+    PixMapHandle portPixMap;
     RgnHandle clipRgn;
     RgnHandle visRgn;
 }GrafPort, *GrafPtr;
@@ -59,25 +67,31 @@ typedef struct {
 GrafPort qd;
 
 typedef struct {
-    PixMap portPixMap;
+    PixMapHandle portPixMap;
     RgnHandle clipRgn;
     RgnHandle visRgn;
-}CGrafPort, *CGrafPtr;
+}CGrafPort;
 
-typedef struct {
-    PixMap portPixMap;
-}String, *StringPtr;
+typedef CGrafPort *CGrafPtr;
+typedef CGrafPort** CGrafPortHandle;
+
+typedef unsigned char *StringPtr;
 
 typedef struct {
 
 }Dialog, *DialogPtr;
 
+typedef struct control {
+
+} Control, **ControlHandle;
+
 
 
 typedef struct GDHandle {
-    PixMap portPixMap;
-}GDHandle;
+    PixMapHandle gdPMap;
+    CGrafPortHandle grafPort;
 
+}GDevice, *GDPtr, **GDHandle;
 
 //----------------------------------------------------------
 //               Métodos MacOs Sistema
@@ -89,7 +103,7 @@ GDHandle GetMainDevice(void);
 GDHandle GetGDevice(void);
 Ptr NewPtrClear(size_t size);
 Ptr NewPtr(size_t size);
-void SetGDevice(GDHandle handle);
+void SetGDevice(GDHandle gdHandle);
 Boolean MemError(void);
 typedef struct OSErr {
 
@@ -109,42 +123,39 @@ typedef struct OSErr {
 typedef struct HandleStruct {
     void* ptr;
     int lockCount;
-    Rect boundsRect;
+
 } HandleStruct;
 
-typedef HandleStruct** Handle;
+typedef void* Handle;
 
-typedef struct AlertTHndl {
+typedef struct alertTHndl {
+    Rect bounds;
+    int lockCount;
     Rect boundsRect;
-} alertTHndl;
+} AlertType, **AlertTHndl;
 
-typedef HandleStruct **AlertTHndl;
-
-typedef struct dialogTHndl {
-
-} dialogTHndl;
-
-typedef HandleStruct **DialogTHndl;
+typedef struct dialog {
+    Rect bounds;
+    int lockCount;
+    Rect boundsRect;
+} dialog, **DialogTHndl;
 
 typedef struct PictureStruct {
 
     Rect picFrame;
     short picSize;
-    SDL_Texture* sdlTexture;
 } Picture, **PicHandle;
 
-PicHandle GetPicture(int ResID);
 
 
 
-typedef struct CTabHandle {
 
-} CTabHandle;
 
 
 
 void OffsetRect(Rect *rect, int x, int y);
 void DrawPicture(PicHandle pic, Rect *rect);
+PicHandle GetPicture(int ResID);
 void ReleaseResource(PicHandle);
 void HLock(Handle h);
 void HUnlock(Handle h);
@@ -167,10 +178,20 @@ void DrawString(Str255 string);
 void ClosePort(GrafPtr graf_ptr);
 void SetPort(GrafPtr graf_ptr);
 short LMGetMBarHeight(void);
-Handle GetResource(Str15 str, short value);
+Handle GetResource(OSType type, short value);
 Byte HGetState(AlertTHndl h);
 void HSetState(Handle handle, Byte state);
+void GetDItem(DialogPtr ptr, short sh,short *itemType , Handle *h, Rect *rect);
+void GetIText(Handle *h, StringPtr string);
+void SetIText(Handle *h, StringPtr string);
+void StringToNum(Str255 string, long *number);
+void InsetRect(Rect *rect, short v, short h);
+void PenSize(short x, short y);
+void FrameRoundRect(Rect *rect, short x, short y);
+void PenNormal(void);
+Boolean NGetTrapAddress(short trapNumber, short toolTrapNumber);
+
 short Random(void);
 short TickCount(void);
-
+void HiliteControl(ControlHandle h, int i);
 #endif //NEWCODE_SDL_UTILITIES_H

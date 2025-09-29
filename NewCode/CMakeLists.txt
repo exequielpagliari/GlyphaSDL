@@ -16,7 +16,9 @@ add_executable(NewCode
         SetUpTakeDown.c
         Sound.c
         Utilities.c
-        CoreSDL/SDL_Utilities.cpp
+        CoreSDL/SDL_Utilities.c
         CoreSDL/SDL_Utilities.h
-        CoreSDL/Sound.cpp
-        CoreSDL/Sound.h)
+        CoreSDL/SDL_Sound.c
+        CoreSDL/SDL_Sound.h
+        CoreSDL/SDL_Utilities.c
+)

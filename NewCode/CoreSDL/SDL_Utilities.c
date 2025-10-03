@@ -35,6 +35,28 @@ void DisposeHandle(Handle h) {
     }
 }
 
+Texture *loadTexture(char *filename) {
+    Texture *texture;
+
+    SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO,
+                   "Loading %s", filename);
+
+    texture = (TexturePtr)IMG_LoadTexture(renderer, filename);
+    if (!texture) {
+        fprintf(stderr, "Failed to load %s!\n", filename);
+    }
+
+    return texture;
+}
+
+
+void SetRect(SDL_Rect *rect, int x, int y, int w, int h) {
+    rect->x = x;
+    rect->y = y;
+    rect->h = h;
+    rect->w = w;
+}
+
 /*
 PicHandle GetPicture(int ResID) {
     return PicHandle pichandle;

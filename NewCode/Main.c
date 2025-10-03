@@ -106,7 +106,8 @@ int main (int argc, char* argv[])
 		HandleEvent();		// Check for events.
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 1);
-		SDL_RenderPresent(renderer);
+
+
 		if ((playing) && (!pausing))
 			printf("Play");//PlayGame();		// If user began game, drop in game loop. (play mode)
 		else				// If no game, animate the screen. (idle mode)
@@ -114,7 +115,8 @@ int main (int argc, char* argv[])
 
 			tickWait = TickCount() + 2L;
 			evenFrame = !evenFrame;
-			//DrawTorches();	// Flicker torches.
+			DrawTorches();	// Flicker torches.
+
 			//CopyAllRects();	// Refresh screen.
 			do				// Wait for 2 Ticks to pass to keep fast Macs at bay.
 			{

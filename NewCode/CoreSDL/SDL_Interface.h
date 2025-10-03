@@ -12,4 +12,7 @@ extern Boolean quitting;
 void HandleEvent(void);
 
 
+
+
+
 #endif //NEWCODE_SDL_INTERFACE_H

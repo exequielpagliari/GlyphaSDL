@@ -13,11 +13,11 @@ find_package(SDL2_mixer REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(${SDL2_MIXER_INCLUDE_DIRS})
-
+INCLUDE_DIRECTORIES("Img")
 add_executable(NewCode
         #Enemy.c
         Externs.h
-        #Graphics.c
+        Graphics.c
         #Interface.c
         Main.c
         Play.c

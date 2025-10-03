@@ -9,8 +9,9 @@
 // handling, menus, dialog boxes, etc.  All the user interaction that takesÉ
 // place before and after an actual game is in play.
 
+
 #include "Externs.h"
-#include <Sound.h>
+//#include <Sound.h>
 
 
 #define kAppleMenuID		128
@@ -26,7 +27,7 @@
 #define iHighScores			3
 #define kAboutPictID		132
 
-
+/*
 void DoAppleMenu (short);
 void DoGameMenu (short);
 void DoOptionsMenu (short);
@@ -38,9 +39,9 @@ void HandleOSEvent (EventRecord *);
 void HandleHighLevelEvent (EventRecord *);
 void DoAbout (void);
 void DoGameSettings (void);
+*/
 
-
-Rect		mainWindowRect;
+//extern SDL_Rect		mainWindowRect; //Rect
 WindowPtr	mainWindow;
 MenuHandle	appleMenu, gameMenu, optionsMenu;
 Boolean		switchedOut, quitting, canPlay, openTheScores;
@@ -50,7 +51,7 @@ extern	Rect		backSrcRect, workSrcRect;
 extern	CGrafPtr	backSrcMap, workSrcMap;
 extern	Boolean		pausing, playing, helpOpen, scoresOpen;
 
-
+/*
 //==============================================================  Functions
 //--------------------------------------------------------------  MenusReflectMode
 
@@ -595,3 +596,4 @@ void DoGameSettings (void)
 	DisposDialog(theDial);					// Clean up before going.
 }
 
+*/

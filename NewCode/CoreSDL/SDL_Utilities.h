@@ -203,7 +203,7 @@ void SetPortBits(BitMap *bitMap);
 void GetPort(GrafPtr *port);
 void NumToString(long value, Str255 string);
 void MoveTo(short x, short y);
-void SetRect(Rect *rect, int x, int y, int w, int h);
+void SetRect(SDL_Rect *rect, int x, int y, int w, int h); //Rect
 void DrawString(Str255 string);
 void ClosePort(GrafPtr graf_ptr);
 void SetPort(GrafPtr graf_ptr);
@@ -259,4 +259,8 @@ typedef struct menu {
 } Menu, *MenuPtr, **MenuHandle;
 
 typedef int KeyMap;
+typedef SDL_Texture Texture;
+typedef Texture *TexturePtr;
+SDL_Texture *loadTexture(char *filename);
+//SDL_Rect		mainWindowRect; //Rect
 #endif //NEWCODE_SDL_UTILITIES_H

@@ -9,8 +9,9 @@
 // This way all the thousands of Rect variables and Pixmaps have a place to go.
 // Anyway, this file contains all the drawing routines.
 
-
+#include "CoreSDL/SDL_Utilities.h"
 #include "Externs.h"
+
 //#include <Palettes.h>
 
 
@@ -29,7 +30,7 @@ void CheckEnemyWrapAround (short);
 void DrawEnemies (void);
 
 
-Rect		backSrcRect, workSrcRect, obSrcRect, playerSrcRect;
+SDL_Rect	backSrcRect, workSrcRect, obSrcRect, playerSrcRect; //Rect
 Rect		numberSrcRect, idleSrcRect, enemyWalkSrcRect, enemyFlySrcRect;
 Rect		obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11];
 Rect		updateRects1[kMaxNumUpdateRects], updateRects2[kMaxNumUpdateRects];
@@ -37,7 +38,7 @@ Rect		flameSrcRect, flameDestRects[2], flameRects[4], eggSrcRect;
 Rect		platformSrcRect, platformCopyRects[9], helpSrcRect, eyeSrcRect;
 Rect		helpSrc, helpDest, handSrcRect, handRects[2], eyeRects[4];
 Point		leftLightningPts[kNumLightningPts], rightLightningPts[kNumLightningPts];
-CGrafPtr	backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap, eyeSrcMap;
+TexturePtr		backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap, eyeSrcMap;//CGrafPtr
 CGrafPtr	numberSrcMap, idleSrcMap, enemyWalkSrcMap, enemyFlySrcMap;
 CGrafPtr	flameSrcMap, eggSrcMap, platformSrcMap, helpSrcMap, handSrcMap;
 GrafPtr		playerMaskMap, enemyWalkMaskMap, enemyFlyMaskMap, eggMaskMap;
@@ -57,7 +58,7 @@ extern	long		theScore, wasTensOfThousands;
 extern	short		livesLeft, levelOn, numEnemies;
 extern	Boolean		evenFrame;
 
-
+/*
 //==============================================================  Functions
 //--------------------------------------------------------------  DrawPlatforms
 
@@ -767,9 +768,13 @@ void CheckPlayerWrapAround (void)
 
 // This handles drawing the two torch's flames.  It chooses randomly fromÉ
 // 4 torch graphics and draws right over the old torches.
-
+*/
 void DrawTorches (void)
 {
+	SDL_QueryTexture((TexturePtr)backSrcMap, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
+	SDL_RenderCopy(renderer, backSrcMap, &backSrcRect, &backSrcRect);
+	SDL_RenderPresent(renderer);
+	/*
 	short		who;
 	
 	who = RandomInt(4);
@@ -787,8 +792,9 @@ void DrawTorches (void)
 				&flameRects[who], &flameDestRects[1], srcCopy, 0L);
 		AddToUpdateRects(&flameDestRects[1]);
 	}
+	*/
 }
-
+/*
 //--------------------------------------------------------------  DrawHand
 
 // This function takes care of drawing the hand offscreen.  There are onlyÉ
@@ -1121,7 +1127,7 @@ void DrawEnemies (void)
 		}
 	}
 }
-
+*/
 //--------------------------------------------------------------  DrawFrame
 
 // This function is the "master" drawing function that calls all the aboveÉ
@@ -1130,11 +1136,11 @@ void DrawEnemies (void)
 void DrawFrame (void)
 {
 	DrawTorches();				// Gee, draws the torches?
-	DrawHand();					// Draws the hand?
-	DrawEye();					// A clue to easing your documentation demandsÉ
-	DrawPlayer();				// is to use "smart" names for your functions.
-	CheckPlayerWrapAround();	// Check for player wrap-around.
-	DrawEnemies();				// Handle all sphinx-type enemy drawing.
-	CopyAllRects();				// Put it all onscreen.
+	//DrawHand();					// Draws the hand?
+	//DrawEye();					// A clue to easing your documentation demandsÉ
+	//DrawPlayer();				// is to use "smart" names for your functions.
+	//CheckPlayerWrapAround();	// Check for player wrap-around.
+	//DrawEnemies();				// Handle all sphinx-type enemy drawing.
+	//CopyAllRects();				// Put it all onscreen.
 }
 

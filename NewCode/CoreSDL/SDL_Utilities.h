@@ -183,7 +183,7 @@ typedef Handle **SoundHandle;
 
 
 
-void OffsetRect(Rect *rect, int x, int y);
+void OffsetRect(SDL_Rect *rect, int x, int y); //Rect
 void DrawPicture(PicHandle pic, Rect *rect);
 PicHandle GetPicture(int ResID);
 void ReleaseResource(PicHandle picHandle);

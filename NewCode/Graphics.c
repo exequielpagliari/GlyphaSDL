@@ -32,15 +32,15 @@ void DrawEnemies (void);
 
 SDL_Rect	backSrcRect, workSrcRect, obSrcRect, playerSrcRect; //Rect
 Rect		numberSrcRect, idleSrcRect, enemyWalkSrcRect, enemyFlySrcRect;
-Rect		obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11];
+SDL_Rect	obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11]; //Rect
 Rect		updateRects1[kMaxNumUpdateRects], updateRects2[kMaxNumUpdateRects];
-Rect		flameSrcRect, flameDestRects[2], flameRects[4], eggSrcRect;
+SDL_Rect		flameSrcRect, flameDestRects[2], flameRects[4], eggSrcRect; //Rect
 Rect		platformSrcRect, platformCopyRects[9], helpSrcRect, eyeSrcRect;
 Rect		helpSrc, helpDest, handSrcRect, handRects[2], eyeRects[4];
 Point		leftLightningPts[kNumLightningPts], rightLightningPts[kNumLightningPts];
 TexturePtr		backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap, eyeSrcMap;//CGrafPtr
 CGrafPtr	numberSrcMap, idleSrcMap, enemyWalkSrcMap, enemyFlySrcMap;
-CGrafPtr	flameSrcMap, eggSrcMap, platformSrcMap, helpSrcMap, handSrcMap;
+TexturePtr	flameSrcMap, eggSrcMap, platformSrcMap, helpSrcMap, handSrcMap;//CGrafPtr
 GrafPtr		playerMaskMap, enemyWalkMaskMap, enemyFlyMaskMap, eggMaskMap;
 GrafPtr		handMaskMap, eyeMaskMap;
 RgnHandle	playRgn;
@@ -771,9 +771,16 @@ void CheckPlayerWrapAround (void)
 */
 void DrawTorches (void)
 {
-	SDL_QueryTexture((TexturePtr)backSrcMap, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
-	SDL_RenderCopy(renderer, backSrcMap, &backSrcRect, &backSrcRect);
-	SDL_RenderPresent(renderer);
+	if (flameSrcRect.y > 32)
+		flameSrcRect.y = 0;
+
+	SDL_RenderCopy(renderer, flameSrcMap, &flameSrcRect,
+		&flameDestRects[0]);
+	SDL_RenderCopy(renderer, flameSrcMap, &flameSrcRect,
+		&flameDestRects[1]);
+
+
+
 	/*
 	short		who;
 	
@@ -842,7 +849,7 @@ void DrawEye (void)
 		AddToUpdateRects(&theEye.dest);
 	}
 }
-
+*/
 //--------------------------------------------------------------  CopyAllRects
 
 // This function goes through the list of "update rects" and copies from anÉ
@@ -853,6 +860,10 @@ void DrawEye (void)
 
 void CopyAllRects (void)
 {
+	SDL_RenderCopy(renderer, backSrcMap, &backSrcRect, &backSrcRect);
+	SDL_RenderCopy(renderer, obeliskSrcMap, &obeliskRects[0], &obSrcRect);
+	SDL_RenderPresent(renderer);
+	/*
 	short		i;
 	
 	if (whichList)	// Every other frame, we alternate which list we use.
@@ -907,8 +918,9 @@ void CopyAllRects (void)
 		numUpdateRects1 = 0;	// Reset number of rects to zero.
 		whichList = !whichList;	// Toggle flag to use other list next frame.
 	}
+	*/
 }
-
+/*
 //--------------------------------------------------------------  DrawPlayer
 
 // Although called "DrawPlayer()", this function actually does its drawingÉ
@@ -1141,6 +1153,6 @@ void DrawFrame (void)
 	//DrawPlayer();				// is to use "smart" names for your functions.
 	//CheckPlayerWrapAround();	// Check for player wrap-around.
 	//DrawEnemies();				// Handle all sphinx-type enemy drawing.
-	//CopyAllRects();				// Put it all onscreen.
+	CopyAllRects();				// Put it all onscreen.
 }
 

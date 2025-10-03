@@ -57,6 +57,11 @@ void SetRect(SDL_Rect *rect, int x, int y, int w, int h) {
     rect->w = w;
 }
 
+void OffsetRect(SDL_Rect *rect, int x, int y) {
+    rect->x = x;
+    rect->y = y;
+};
+
 /*
 PicHandle GetPicture(int ResID) {
     return PicHandle pichandle;

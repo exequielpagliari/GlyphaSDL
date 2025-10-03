@@ -105,7 +105,7 @@ int main (int argc, char* argv[])
 	{
 		HandleEvent();		// Check for events.
 		SDL_RenderClear(renderer);
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 1);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
 
 
 		if ((playing) && (!pausing))
@@ -117,7 +117,7 @@ int main (int argc, char* argv[])
 			evenFrame = !evenFrame;
 			DrawTorches();	// Flicker torches.
 
-			//CopyAllRects();	// Refresh screen.
+			CopyAllRects();	// Refresh screen.
 			do				// Wait for 2 Ticks to pass to keep fast Macs at bay.
 			{
 			}

@@ -5,6 +5,8 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
+#ifndef EXTERN
+#define EXTERN
 #include "CoreSDL/SDL_Utilities.h"
 
 #define	kPutInFront			(WindowPtr)-1L
@@ -235,3 +237,4 @@ void DisableControl (DialogPtr, short);
 #endif
 */
 
+#endif // MI_HEADER_H

@@ -9,22 +9,30 @@
 // Here is the "main" file for Glypha.  Here is where the game begins and ends.
 // Also included are the preference calls.
 
+
+#include "CoreSDL/SDL_Utilities.h"
 #include "Externs.h"
-#include <Sound.h>
+#include <stdio.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+//#include <Sound.h>
+
 
 
 #define kPrefsVersion			0x0001
-
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 
 void ReadInPrefs (void);
 void WriteOutPrefs (void);
-void main (void);
+int main (int argc, char* argv[]);
 
 
 prefsInfo	thePrefs;
 short		wasVolume;
-
-extern	Boolean		quitting, playing, pausing, evenFrame;
+Boolean		switchedOut, quitting, canPlay, openTheScores;
+extern	Boolean		playing, pausing, evenFrame;
 
 
 //==============================================================  Functions
@@ -35,6 +43,7 @@ extern	Boolean		quitting, playing, pausing, evenFrame;
 
 void ReadInPrefs (void)
 {
+	/*
 	short		i;
 							// Call LoadPrefs() function - returns TRUE if it worked.
 	if (LoadPrefs(&thePrefs, kPrefsVersion))
@@ -43,10 +52,10 @@ void ReadInPrefs (void)
 	{
 		thePrefs.prefVersion = kPrefsVersion;				// version of prefs
 		thePrefs.filler = 0;								// just padding
-		PasStringCopy("\pYour Name", thePrefs.highName);	// last highscores name
+		PasStringCopy("Your Name", thePrefs.highName);	// last highscores name
 		for (i = 0; i < 10; i++)							// loop through scores
 		{
-			PasStringCopy("\pNemo", thePrefs.highNames[i]);	// put "Nemo" in name
+			PasStringCopy("Nemo", thePrefs.highNames[i]);	// put "Nemo" in name
 			thePrefs.highScores[i] = 0L;					// set highscore to 0
 			thePrefs.highLevel[i] = 0;						// level attained = 0
 		}
@@ -54,6 +63,7 @@ void ReadInPrefs (void)
 	}
 							// Get sound volume so we can restore it.
 	GetSoundVol(&wasVolume);
+	*/
 }
 
 //--------------------------------------------------------------  WriteOutPrefs
@@ -63,9 +73,11 @@ void ReadInPrefs (void)
 
 void WriteOutPrefs (void)
 {
+	/*
 	if (!SavePrefs(&thePrefs, kPrefsVersion))
 		SysBeep(1);
 	SetSoundVol(wasVolume);
+	*/
 }
 
 //--------------------------------------------------------------  main
@@ -75,39 +87,47 @@ void WriteOutPrefs (void)
 //	until the user chooses to quit.  At that point, it cleans up
 //	and exits.
 
-void main (void)
+int main (int argc, char* argv[])
 {
 	long		tickWait;
-	
+
+
+
 	ToolBoxInit();			// Call function that initializes the ToolBox managers.
-	CheckEnvirons();		// Check the Mac we're on to see if we can run.
+	//CheckEnvirons();		// Check the Mac we're on to see if we can run.
 	OpenMainWindow();		// Open up the main window - it will fill the monitor.
 	InitVariables();		// Initialize Glypha's variables.
-	InitSound();			// Create sound channels and load up sounds.
-	InitMenubar();			// Set up the game's menubar.
-	ReadInPrefs();			// Load up the preferences.
+	//InitSound();			// Create sound channels and load up sounds.
+	//InitMenubar();			// Set up the game's menubar.
+	//ReadInPrefs();			// Load up the preferences.
 	
 	do						// Here begins the main loop.
 	{
 		HandleEvent();		// Check for events.
+		SDL_RenderClear(renderer);
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 1);
+		SDL_RenderPresent(renderer);
 		if ((playing) && (!pausing))
-			PlayGame();		// If user began game, drop in game loop. (play mode)
+			printf("Play");//PlayGame();		// If user began game, drop in game loop. (play mode)
 		else				// If no game, animate the screen. (idle mode)
 		{
+
 			tickWait = TickCount() + 2L;
 			evenFrame = !evenFrame;
-			DrawTorches();	// Flicker torches.
-			CopyAllRects();	// Refresh screen.
+			//DrawTorches();	// Flicker torches.
+			//CopyAllRects();	// Refresh screen.
 			do				// Wait for 2 Ticks to pass to keep fast Macs at bay.
 			{
 			}
 			while (TickCount() < tickWait);
 		}
+
 	}
 	while (!quitting);
 	
-	KillSound();			// Dispose of sound channels.
+	//KillSound();			// Dispose of sound channels.
 	ShutItDown();			// Dispose of other structures.
-	WriteOutPrefs();		// Save preferences to disk.
+	//WriteOutPrefs();		// Save preferences to disk.
+	return 0;
 }
 

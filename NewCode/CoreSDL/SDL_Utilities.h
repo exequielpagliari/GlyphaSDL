@@ -1,37 +1,63 @@
 //
 // Created by exepa on 9/27/25.
 //
-
-#ifndef NEWCODE_SDL_UTILITIES_H
-#define NEWCODE_SDL_UTILITIES_H
+#pragma once
 #include <stddef.h>
 #include <SDL2/SDL_image.h>
+#ifndef NEWCODE_SDL_UTILITIES_H
+#define NEWCODE_SDL_UTILITIES_H
+
 
 typedef uint8_t Color;
-#define blackColor  0x00000011
-#define whiteColor  0x11111111
+#define blackColor  0x000000FF
+#define whiteColor  0xFFFFFFFF
 #define ToolTrap 0
-typedef char Byte;
-typedef enum { false, true, FALSE= 0, TRUE } Boolean;
+
+typedef enum { false , true, FALSE= 0, TRUE } Boolean;
 typedef unsigned char Str255[256];
 typedef unsigned char Str15[16];
-typedef void* Ptr;
-Boolean noErr = false;
-
+typedef char Byte;
+typedef unsigned long Size;
+typedef char* Ptr;
+typedef Ptr* Handle;
+typedef unsigned short SmallFract;
 typedef unsigned long OSType;
 
-typedef struct CTabHandle {
+extern SDL_Renderer *renderer;
+extern SDL_Window *window;
 
-} CTabHandle;
+extern Boolean noErr;
 
-/* primary form */
+typedef struct {
+    SmallFract red;
+    SmallFract green;
+    SmallFract blue;
+}RGBColor;
+
+typedef struct colorSpec
+{
+    short value;
+    RGBColor rgb;
+} ColorSpec;
+
+typedef ColorSpec CSpecArray[];
+
+typedef struct colorTable {
+    long ctSeed;
+    short ctFlags;
+    short ctSize;
+    CSpecArray ctTable;
+} ColorTable;
+
+typedef ColorTable *CTabPtr;
+typedef CTabPtr *CTabHandle;
+
 typedef struct
 {
     short left;
-    short top;
     short right;
     short bottom;
-    int picFrame;
+    short top;
 }
 Rect;
 
@@ -41,14 +67,20 @@ typedef struct PixMap {
     short rowBytes;
     Rect bounds;
     CTabHandle pmTable;
+} PixMap;
 
-} PixMap, **PixMapHandle;
+typedef PixMap *PixMapPtr;
+typedef PixMapPtr *PixMapHandle;
+
+Handle NewHandle(Size size);
+void DisposeHandle(Handle h);
 
 typedef struct {
-    void* baseAddr;
+    Ptr baseAddr;
     short rowBytes;
     Rect bounds;
 } BitMap;
+
 
 typedef struct {
     short rgnSize;
@@ -64,7 +96,7 @@ typedef struct {
     RgnHandle visRgn;
 }GrafPort, *GrafPtr;
 
-GrafPort qd;
+//GrafPort qd;
 
 typedef struct {
     PixMapHandle portPixMap;
@@ -104,14 +136,8 @@ GDHandle GetGDevice(void);
 Ptr NewPtrClear(size_t size);
 Ptr NewPtr(size_t size);
 void SetGDevice(GDHandle gdHandle);
-Boolean MemError(void);
-typedef struct OSErr {
 
-} OSErr;
-
-
-
-
+typedef unsigned short OSErr;
 
 
 //----------------------------------------------------------
@@ -126,7 +152,8 @@ typedef struct HandleStruct {
 
 } HandleStruct;
 
-typedef void* Handle;
+
+
 
 typedef struct alertTHndl {
     Rect bounds;
@@ -144,10 +171,13 @@ typedef struct PictureStruct {
 
     Rect picFrame;
     short picSize;
-} Picture, **PicHandle;
+} Picture, PicPtr, **PicHandle;
 
+typedef struct point {
+    short x, y;
+} Point, **PointPtr;
 
-
+typedef Handle **SoundHandle;
 
 
 
@@ -156,7 +186,7 @@ typedef struct PictureStruct {
 void OffsetRect(Rect *rect, int x, int y);
 void DrawPicture(PicHandle pic, Rect *rect);
 PicHandle GetPicture(int ResID);
-void ReleaseResource(PicHandle);
+void ReleaseResource(PicHandle picHandle);
 void HLock(Handle h);
 void HUnlock(Handle h);
 void OpenCPort(CGrafPtr h);
@@ -168,12 +198,12 @@ void RectRgn(RgnHandle rgn, const Rect* rect);
 void ForeColor(uint8_t color);
 void BackColor(uint8_t color);
 void EraseRect(Rect *rect);
-void DisposePtr(Ptr *ptr);
+void DisposePtr(Ptr ptr);
 void SetPortBits(BitMap *bitMap);
 void GetPort(GrafPtr *port);
 void NumToString(long value, Str255 string);
 void MoveTo(short x, short y);
-void SetRect(Rect *rect, int left, int top, int right , int bottom);
+void SetRect(Rect *rect, int x, int y, int w, int h);
 void DrawString(Str255 string);
 void ClosePort(GrafPtr graf_ptr);
 void SetPort(GrafPtr graf_ptr);
@@ -182,16 +212,51 @@ Handle GetResource(OSType type, short value);
 Byte HGetState(AlertTHndl h);
 void HSetState(Handle handle, Byte state);
 void GetDItem(DialogPtr ptr, short sh,short *itemType , Handle *h, Rect *rect);
-void GetIText(Handle *h, StringPtr string);
-void SetIText(Handle *h, StringPtr string);
+void GetIText(Handle h, StringPtr string);
+void SetIText(Handle h, StringPtr string);
 void StringToNum(Str255 string, long *number);
 void InsetRect(Rect *rect, short v, short h);
 void PenSize(short x, short y);
 void FrameRoundRect(Rect *rect, short x, short y);
 void PenNormal(void);
 Boolean NGetTrapAddress(short trapNumber, short toolTrapNumber);
+OSErr ResError(void);
+OSErr MemError(void);
 
+long GetHandleSize(Handle h);
 short Random(void);
 short TickCount(void);
 void HiliteControl(ControlHandle h, int i);
+void BlockMove(Ptr ptr, Ptr ptr2, long dataSize);
+
+
+//Sound
+typedef struct preferences {
+
+} Preference, *PreferencePrt, **PreferenceHandle;
+
+void SetSoundVol(short volumenValue);
+void GetSoundVol(short *volumenValue);
+
+
+//main
+void SysBeep(int count);
+
+// SetupTakeDown
+
+typedef struct window {
+
+} Window, *WindowPtr, **WindowHandle;
+
+RgnHandle NewRgn(void);		// Create empty new region.
+void OpenRgn(void);
+void LineTo(short x, short y);
+void CloseRgn(RgnHandle rgnHandle);
+void MoveHHi(Handle h);
+
+typedef struct menu {
+
+} Menu, *MenuPtr, **MenuHandle;
+
+typedef int KeyMap;
 #endif //NEWCODE_SDL_UTILITIES_H

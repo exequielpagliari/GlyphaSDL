@@ -11,7 +11,7 @@
 
 
 #include "Externs.h"
-#include <Palettes.h>
+//#include <Palettes.h>
 
 
 #define kUpperEyeHeight			100

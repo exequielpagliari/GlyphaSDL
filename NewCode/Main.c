@@ -116,11 +116,11 @@ int main (int argc, char* argv[])
 
 			tickWait = TickCount() + 2L;
 			evenFrame = !evenFrame;
-			DrawTorches();	// Flicker torches.
+			//DrawTorches();	// Flicker torches.
 
 			CopyAllRects();	// Refresh screen.
-			LogNextTick(50);
-			WaitForNextTick();
+			//LogNextTick(50);
+			//WaitForNextTick();
 			do				// Wait for 2 Ticks to pass to keep fast Macs at bay.
 			{
 			}

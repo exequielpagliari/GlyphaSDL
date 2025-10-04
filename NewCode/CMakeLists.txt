@@ -15,7 +15,7 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(${SDL2_MIXER_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES("Img")
 add_executable(NewCode
-        #Enemy.c
+        Enemy.c
         Externs.h
         Graphics.c
         #Interface.c

@@ -76,6 +76,22 @@ void OffsetRect(SDL_Rect *rect, int x, int y) {
     rect->y = y;
 };
 
+void CopyBits_SDL(SDL_Renderer* ren,
+                  TexturePtr srcTex,
+                  SDL_Rect* srcRect,
+                  SDL_Rect* dstRect)
+{
+    SDL_RenderCopy(ren, srcTex, srcRect, dstRect);
+}
+
+void ZeroRectCorner(SDL_Rect *theRect)
+{
+    theRect->w -= theRect->x;	// Move right edge by amount of left.
+    theRect->h -= theRect->y;	// Move bottom edge by amount of top.
+    theRect->x = 0;					// Can now set left to zero.
+    theRect->y = 0;					// Can set top edge to zero as well.
+}
+
 /*
 PicHandle GetPicture(int ResID) {
     return PicHandle pichandle;

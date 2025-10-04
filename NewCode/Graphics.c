@@ -31,18 +31,18 @@ void DrawEnemies (void);
 
 
 SDL_Rect	backSrcRect, workSrcRect, obSrcRect, playerSrcRect; //Rect
-Rect		numberSrcRect, idleSrcRect, enemyWalkSrcRect, enemyFlySrcRect;
+SDL_Rect		numberSrcRect, idleSrcRect, enemyWalkSrcRect, enemyFlySrcRect; //Rect
 SDL_Rect	obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11]; //Rect
-Rect		updateRects1[kMaxNumUpdateRects], updateRects2[kMaxNumUpdateRects];
+SDL_Rect		updateRects1[kMaxNumUpdateRects], updateRects2[kMaxNumUpdateRects]; //Rect
 SDL_Rect		flameSrcRect, flameDestRects[2], flameRects[4], eggSrcRect; //Rect
 Rect		platformSrcRect, platformCopyRects[9], helpSrcRect, eyeSrcRect;
-Rect		helpSrc, helpDest, handSrcRect, handRects[2], eyeRects[4];
+SDL_Rect		helpSrc, helpDest, handSrcRect, handRects[2], eyeRects[4]; //Rect
 Point		leftLightningPts[kNumLightningPts], rightLightningPts[kNumLightningPts];
 TexturePtr		backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap, eyeSrcMap;//CGrafPtr
-CGrafPtr	numberSrcMap, idleSrcMap, enemyWalkSrcMap, enemyFlySrcMap;
+TexturePtr	numberSrcMap, idleSrcMap, enemyWalkSrcMap, enemyFlySrcMap; //CGrafPtr
 TexturePtr	flameSrcMap, eggSrcMap, platformSrcMap, helpSrcMap, handSrcMap;//CGrafPtr
-GrafPtr		playerMaskMap, enemyWalkMaskMap, enemyFlyMaskMap, eggMaskMap;
-GrafPtr		handMaskMap, eyeMaskMap;
+TexturePtr		playerMaskMap, enemyWalkMaskMap, enemyFlyMaskMap, eggMaskMap; //GrafPtr
+TexturePtr		handMaskMap, eyeMaskMap; //GrafPtr
 RgnHandle	playRgn;
 short		numUpdateRects1, numUpdateRects2;
 Boolean		whichList, helpOpen, scoresOpen;
@@ -632,7 +632,7 @@ void QuickUnionRect (Rect *rect1, Rect *rect2, Rect *whole)
 		whole->bottom = rect1->bottom;
 	}
 }
-
+*/
 //--------------------------------------------------------------  AddToUpdateRects
 
 // This is an elegant way to handle game animation.  It has some drawbacks, butÉ
@@ -645,7 +645,7 @@ void QuickUnionRect (Rect *rect1, Rect *rect2, Rect *whole)
 // moved to the screen (the shpinx or whatever).  This routine will take care ofÉ
 // drawing the shinx or whatever to the screen.
 
-void AddToUpdateRects (Rect *theRect)
+void AddToUpdateRects (SDL_Rect *theRect) //Rect
 {
 	if (whichList)		// We alternate every odd frame between two listsÉ
 	{					// in order to hold a copy of rects from last frame.
@@ -656,14 +656,14 @@ void AddToUpdateRects (Rect *theRect)
 						// Increment the number of rects held in list.
 			numUpdateRects1++;
 						// Do simple bounds checking (clip to screen).
-			if (updateRects1[numUpdateRects1].left < 0)
-				updateRects1[numUpdateRects1].left = 0;
-			else if (updateRects1[numUpdateRects1].right > 640)
-				updateRects1[numUpdateRects1].right = 640;
-			if (updateRects1[numUpdateRects1].top < 0)
-				updateRects1[numUpdateRects1].top = 0;
-			else if (updateRects1[numUpdateRects1].bottom > 480)
-				updateRects1[numUpdateRects1].bottom = 480;
+			if (updateRects1[numUpdateRects1].x < 0) //x
+				updateRects1[numUpdateRects1].x = 0; //x
+			else if (updateRects1[numUpdateRects1].w > 640) //right
+				updateRects1[numUpdateRects1].w = 640; //right
+			if (updateRects1[numUpdateRects1].y < 0) //top
+				updateRects1[numUpdateRects1].y = 0; //top
+			else if (updateRects1[numUpdateRects1].h > 480) //bottom
+				updateRects1[numUpdateRects1].h = 480; //bottom
 		}
 	}
 	else				// Exactly like the above section, but with the other list.
@@ -672,18 +672,18 @@ void AddToUpdateRects (Rect *theRect)
 		{
 			updateRects2[numUpdateRects2] = *theRect;
 			numUpdateRects2++;
-			if (updateRects2[numUpdateRects2].left < 0)
-				updateRects2[numUpdateRects2].left = 0;
-			else if (updateRects2[numUpdateRects2].right > 640)
-				updateRects2[numUpdateRects2].right = 640;
-			if (updateRects2[numUpdateRects2].top < 0)
-				updateRects2[numUpdateRects2].top = 0;
-			else if (updateRects2[numUpdateRects2].bottom > 480)
-				updateRects2[numUpdateRects2].bottom = 480;
+			if (updateRects2[numUpdateRects2].x < 0) //x
+				updateRects2[numUpdateRects2].x = 0; //x
+			else if (updateRects2[numUpdateRects2].w > 640) //right
+				updateRects2[numUpdateRects2].w = 640; //right
+			if (updateRects2[numUpdateRects2].y < 0) //top
+				updateRects2[numUpdateRects2].y = 0; //top
+			else if (updateRects2[numUpdateRects2].h > 480) //bottom
+				updateRects2[numUpdateRects2].h = 480; //bottom
 		}
 	}
 }
-
+/*
 //--------------------------------------------------------------  CheckPlayerWrapAround
 
 // This handles drawing wrap-around.  It is such that, when a player walks partlyÉ
@@ -775,25 +775,22 @@ void DrawTorches (void)
 
 	who = RandomInt(4);
 
-	//if (flameSrcRect.y > 32)
-	//	flameSrcRect.y = 0;
 
-	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
-&flameDestRects[0]);
-	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
-&flameDestRects[1]);
 
-/*
+
+
 	if (evenFrame) {
 		SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
 	&flameDestRects[0]);
+		AddToUpdateRects(&flameDestRects[0]);
 	}
 	else {
 		SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
 	&flameDestRects[1]);
+		AddToUpdateRects(&flameDestRects[1]);
 	}
-	SDL_RenderPresent(renderer);
-*/
+
+
 	/*
 	short		who;
 	
@@ -873,35 +870,49 @@ void DrawEye (void)
 
 void CopyAllRects(void)
 {
+	/*
 	SDL_RenderCopy(renderer, backSrcMap, &backSrcRect, &backSrcRect);
 	SDL_RenderCopy(renderer, obeliskSrcMap, &obeliskRects[0], &obSrcRect);
 	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[0], &flameSrcRect);
 	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[1], &flameSrcRect);
-	SDL_RenderPresent(renderer);
-	/*
+	*/
+
+
 	short		i;
 	
 	if (whichList)	// Every other frame, we alternate which list we use.
 	{				// Copy new graphics to screen (sphinxes, player, etc.).
 		for (i = 0; i < numUpdateRects1; i++)
 		{
+
+			CopyBits_SDL(renderer,workSrcMap,&updateRects1[i],&updateRects1[i]);
+
+
+			/*
 			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
 					&(((GrafPtr)mainWindow)->portBits), 
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
+					*/
 		}
 					// Patch up old graphics from last frame (old sphinx locations, etc.).
 		for (i = 0; i < numUpdateRects2; i++)
 		{
+			CopyBits_SDL(renderer, workSrcMap,&updateRects2[i], &updateRects2[i]);
+			/*
 			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
 					&(((GrafPtr)mainWindow)->portBits), 
 					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
+					*/
 		}
 					// Clean up offscreen (get rid of sphinxes, etc.).
 		for (i = 0; i < numUpdateRects1; i++)
 		{
+			CopyBits_SDL(renderer,backSrcMap,&updateRects1[i],&updateRects1[i]);
+			/*
 			CopyBits(&((GrafPtr)backSrcMap)->portBits, 
 					&((GrafPtr)workSrcMap)->portBits, 
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
+					*/
 		}
 		
 		numUpdateRects2 = 0;	// Reset number of rects to zero.
@@ -911,29 +922,37 @@ void CopyAllRects(void)
 	{				// Copy new graphics to screen (sphinxes, player, etc.).
 		for (i = 0; i < numUpdateRects2; i++)
 		{
+			CopyBits_SDL(renderer, workSrcMap,&updateRects2[i], &updateRects2[i]);
+			/*
 			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
 					&(((GrafPtr)mainWindow)->portBits), 
-					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
+					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);*/
 		}
 					// Patch up old graphics from last frame (old sphinx locations, etc.).
 		for (i = 0; i < numUpdateRects1; i++)
 		{
+			CopyBits_SDL(renderer,workSrcMap,&updateRects1[i],&updateRects1[i]);
+			/*
 			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
 					&(((GrafPtr)mainWindow)->portBits), 
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
+					*/
 		}
 					// Clean up offscreen (get rid of sphinxes, etc.).
 		for (i = 0; i < numUpdateRects2; i++)
 		{
+			CopyBits_SDL(renderer,backSrcMap,&updateRects2[i],&updateRects2[i]);
+			/*
 			CopyBits(&((GrafPtr)backSrcMap)->portBits, 
 					&((GrafPtr)workSrcMap)->portBits, 
 					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
+					*/
 		}
 		
 		numUpdateRects1 = 0;	// Reset number of rects to zero.
 		whichList = !whichList;	// Toggle flag to use other list next frame.
 	}
-	*/
+	SDL_RenderPresent(renderer);
 }
 /*
 //--------------------------------------------------------------  DrawPlayer

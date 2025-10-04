@@ -8,6 +8,7 @@
 // This file contains all enemy related functions (enemy "AI").  It handlesÉ
 // the enemy decision making proccess, moves the enemies, etc.
 
+
 #include "Externs.h"
 
 
@@ -51,7 +52,7 @@ short		deadEnemies, spawnedEnemies, numEnemiesThisLevel, numOwls;
 
 extern	playerType	thePlayer;
 extern	enemyType	theEnemies[kMaxEnemies];
-extern	Rect		platformRects[6], enemyInitRects[5];
+extern	SDL_Rect		platformRects[6], enemyInitRects[5];//Rect
 extern	long		theScore;
 extern	short		numLedges, lightningCount, numEnemies, countDownTimer;
 extern	short		levelOn, lightH, lightV;
@@ -65,7 +66,7 @@ extern	Boolean		evenFrame, doEnemyFlapSound, doEnemyScrapeSound;
 // the enemies starting location.  The only thing important here is that the enemyÉ
 // appears on a valid platform for the particular level we're on.  As well, whichÉ
 // platform he (it) appears on should be random.
-
+/*
 Boolean SetEnemyInitialLocation (Rect *theRect)
 {
 	short		where, possibilities;
@@ -1372,3 +1373,4 @@ void CheckPlayerEnemyCollision (void)
 	}
 }
 
+*/

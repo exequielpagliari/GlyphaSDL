@@ -7,6 +7,7 @@
 
 #ifndef EXTERN
 #define EXTERN
+//#include <SDL2/SDL.h>
 #include "CoreSDL/SDL_Utilities.h"
 
 #define	kPutInFront			(WindowPtr)-1L
@@ -173,7 +174,7 @@ void FlashObelisks (Boolean);
 void StrikeLightning (void);
 void DumpBackToWorkMap (void);
 void DumpMainToWorkMap (void);
-void AddToUpdateRects (Rect *);
+void AddToUpdateRects (SDL_Rect *); //Rect
 void DrawTorches (void);
 void CopyAllRects (void);
 void DrawFrame (void);
@@ -205,7 +206,7 @@ void FindOurDevice (void);
 void LoadGraphic (short);
 void CreateOffScreenPixMap (Rect *, CGrafPtr *);
 void CreateOffScreenBitMap (Rect *, GrafPtr *);
-void ZeroRectCorner (Rect *);
+void ZeroRectCorner (SDL_Rect *theRect); //Rect
 void FlashShort (short);
 void LogNextTick (long);
 void WaitForNextTick (void);

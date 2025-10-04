@@ -771,16 +771,29 @@ void CheckPlayerWrapAround (void)
 */
 void DrawTorches (void)
 {
-	if (flameSrcRect.y > 32)
-		flameSrcRect.y = 0;
+	short		who;
 
-	SDL_RenderCopy(renderer, flameSrcMap, &flameSrcRect,
-		&flameDestRects[0]);
-	SDL_RenderCopy(renderer, flameSrcMap, &flameSrcRect,
-		&flameDestRects[1]);
+	who = RandomInt(4);
 
+	//if (flameSrcRect.y > 32)
+	//	flameSrcRect.y = 0;
 
+	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
+&flameDestRects[0]);
+	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
+&flameDestRects[1]);
 
+/*
+	if (evenFrame) {
+		SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
+	&flameDestRects[0]);
+	}
+	else {
+		SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
+	&flameDestRects[1]);
+	}
+	SDL_RenderPresent(renderer);
+*/
 	/*
 	short		who;
 	
@@ -858,10 +871,12 @@ void DrawEye (void)
 // whole rest of Glypha is, in essence, there only to lead up, ultimately, É
 // to this function.
 
-void CopyAllRects (void)
+void CopyAllRects(void)
 {
 	SDL_RenderCopy(renderer, backSrcMap, &backSrcRect, &backSrcRect);
 	SDL_RenderCopy(renderer, obeliskSrcMap, &obeliskRects[0], &obSrcRect);
+	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[0], &flameSrcRect);
+	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[1], &flameSrcRect);
 	SDL_RenderPresent(renderer);
 	/*
 	short		i;

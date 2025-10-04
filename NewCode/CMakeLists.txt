@@ -24,7 +24,7 @@ add_executable(NewCode
         #Prefs.c
         SetUpTakeDown.c
         #Sound.c
-        #Utilities.c
+        Utilities.c
         CoreSDL/SDL_Utilities.c
         CoreSDL/SDL_Utilities.h
         CoreSDL/SDL_Interface.c

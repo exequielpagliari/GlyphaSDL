@@ -22,6 +22,7 @@ typedef char* Ptr;
 typedef Ptr* Handle;
 typedef unsigned short SmallFract;
 typedef unsigned long OSType;
+extern long tickNext;
 
 extern SDL_Renderer *renderer;
 extern SDL_Window *window;
@@ -257,7 +258,7 @@ void MoveHHi(Handle h);
 typedef struct menu {
 
 } Menu, *MenuPtr, **MenuHandle;
-
+void WaitForNextTick(void);
 typedef int KeyMap;
 typedef SDL_Texture Texture;
 typedef Texture *TexturePtr;

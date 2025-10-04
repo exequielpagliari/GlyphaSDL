@@ -100,7 +100,8 @@ int main (int argc, char* argv[])
 	//InitSound();			// Create sound channels and load up sounds.
 	//InitMenubar();			// Set up the game's menubar.
 	//ReadInPrefs();			// Load up the preferences.
-	
+	playing = FALSE;
+	pausing = FALSE;
 	do						// Here begins the main loop.
 	{
 		HandleEvent();		// Check for events.
@@ -118,10 +119,13 @@ int main (int argc, char* argv[])
 			DrawTorches();	// Flicker torches.
 
 			CopyAllRects();	// Refresh screen.
+			LogNextTick(50);
+			WaitForNextTick();
 			do				// Wait for 2 Ticks to pass to keep fast Macs at bay.
 			{
 			}
 			while (TickCount() < tickWait);
+
 		}
 
 	}

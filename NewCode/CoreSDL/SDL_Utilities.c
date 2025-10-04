@@ -15,6 +15,20 @@ short TickCount() {
     return (short)SDL_GetTicks();
 };
 
+void LogNextTick (long howMany)
+{
+    tickNext = TickCount() + howMany;		// Get machine's TickCount() and add to it.
+}
+
+void WaitForNextTick(void) {
+    do {
+        // printf(("%d\n"), tickNext);
+        // printf(("%d\n"),SDL_GetTicks);
+    } while ((int)SDL_GetTicks() <
+             tickNext); // Loop until TickCount() catches up.
+}
+
+
 Handle NewHandle(Size size) {
     char **h = malloc(sizeof(char*)); // Master pointer
     if (!h) return NULL;

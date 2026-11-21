@@ -33,6 +33,8 @@ add_executable(NewCode
         #CoreSDL/SDL_Sound.h
         #CoreSDL/SDL_Utilities.c
         #CoreSDL/String.c
+		Tests/TestRunner.c
+		Tests/TestRunner.h
 )
 
 target_link_libraries(NewCode ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})

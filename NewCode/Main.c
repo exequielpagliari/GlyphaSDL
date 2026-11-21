@@ -18,6 +18,8 @@
 #include <SDL_image.h>
 //#include <Sound.h>
 
+#include "Tests/TestRunner.h"
+
 
 
 #define kPrefsVersion			0x0001
@@ -102,6 +104,12 @@ int main (int argc, char* argv[])
 	//ReadInPrefs();			// Load up the preferences.
 	playing = FALSE;
 	pausing = FALSE;
+
+	if (argc >= 3 && strcmp(argv[1], "--test") == 0)
+	{
+		printf("Running test: %s\n", argv[2]);
+		return RunTest(argc - 1, argv + 1);
+	}
 	do						// Here begins the main loop.
 	{
 		HandleEvent();		// Check for events.

@@ -3,6 +3,8 @@
 //
 
 #include "SDL_Utilities.h"
+#include <stdio.h>
+
 
 
 short Random() {
@@ -57,7 +59,7 @@ Texture *loadTexture(char *filename) {
 
     texture = (TexturePtr)IMG_LoadTexture(renderer, filename);
     if (!texture) {
-        fprintf(stderr, "Failed to load %s!\n", filename);
+        printf("Failed to load %s!\n", filename);
     }
 
     return texture;

@@ -3,7 +3,7 @@
 //
 #pragma once
 #include <stddef.h>
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #ifndef NEWCODE_SDL_UTILITIES_H
 #define NEWCODE_SDL_UTILITIES_H
 
@@ -111,13 +111,13 @@ typedef CGrafPort *CGrafPtr;
 typedef CGrafPort** CGrafPortHandle;
 
 typedef unsigned char *StringPtr;
-
+/*
 typedef struct {
-
+    int ab;
 }Dialog, *DialogPtr;
-
+*/
 typedef struct control {
-
+    int a;
 } Control, **ControlHandle;
 
 
@@ -168,7 +168,7 @@ typedef struct dialog {
     Rect bounds;
     int lockCount;
     Rect boundsRect;
-} dialog, **DialogTHndl;
+} Dialog, *DialogPtr, **DialogTHndl;
 
 typedef struct PictureStruct {
 
@@ -235,7 +235,7 @@ void BlockMove(Ptr ptr, Ptr ptr2, long dataSize);
 
 //Sound
 typedef struct preferences {
-
+    int a;
 } Preference, *PreferencePrt, **PreferenceHandle;
 
 void SetSoundVol(short volumenValue);
@@ -248,7 +248,7 @@ void SysBeep(int count);
 // SetupTakeDown
 
 typedef struct window {
-
+    int a;
 } Window, *WindowPtr, **WindowHandle;
 
 RgnHandle NewRgn(void);		// Create empty new region.
@@ -258,7 +258,7 @@ void CloseRgn(RgnHandle rgnHandle);
 void MoveHHi(Handle h);
 
 typedef struct menu {
-
+    int a;
 } Menu, *MenuPtr, **MenuHandle;
 void WaitForNextTick(void);
 typedef int KeyMap;

@@ -12,8 +12,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
+#include "SDL.h"
+#include "SDL_image.h"
 #include "Externs.h"
 
 
@@ -170,6 +170,7 @@ Boolean DoWeHaveColor (void)
 	SysEnvirons(2, &thisWorld);		// Call the old SysEnvirons() function.
 	return (thisWorld.hasColorQD);	// And return whether it has Color QuickDraw.
 	*/
+	return (TRUE);
 }
 
 //--------------------------------------------------------------  DoWeHaveSystem605  
@@ -191,6 +192,7 @@ Boolean DoWeHaveSystem605 (void)
 		haveIt = FALSE;
 	return (haveIt);
 	*/
+	return (TRUE);
 }
 
 //--------------------------------------------------------------  WhatsOurDepth  
@@ -219,6 +221,7 @@ short WhatsOurDepth (void)
 	
 	return (thisDepth);								// Return screen depth.
 	*/
+	return (8);
 }
 
 //--------------------------------------------------------------  CanWeDisplay8Bit  
@@ -242,6 +245,7 @@ Boolean CanWeDisplay8Bit (GDHandle theDevice)
 	
 	return (canDo);		// Return the result.
 	*/
+	return (TRUE);
 }
 
 //--------------------------------------------------------------  SwitchToDepth
@@ -750,7 +754,8 @@ void ShutItDown (void)
 		SwitchToDepth(wasDepth, TRUE);	// Switch back to out "old" depth.
 		*/
 
-	free(window);
-	free(renderer);
+	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(renderer);
+	SDL_Quit();
 }
 

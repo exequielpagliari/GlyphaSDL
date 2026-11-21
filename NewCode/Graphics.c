@@ -9,7 +9,7 @@
 // This way all the thousands of Rect variables and Pixmaps have a place to go.
 // Anyway, this file contains all the drawing routines.
 
-#include "CoreSDL/SDL_Utilities.h"
+
 #include "Externs.h"
 
 //#include <Palettes.h>

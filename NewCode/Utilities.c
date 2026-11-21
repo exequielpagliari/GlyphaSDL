@@ -1,9 +1,9 @@
-//============================================================================
+
+//======
 //----------------------------------------------------------------------------
 //									Utilities.c
 //----------------------------------------------------------------------------
-//============================================================================
-
+//======
 // These functions are sort of universal utility functions.  They aren't specific�
 // to Glypha per se.  I use these (and others) in many, many games.  Many of them�
 // as well are useful for any app you might write for the Mac.
@@ -22,7 +22,7 @@ GDHandle	thisGDevice;
 long		tickNext;
 
 
-//==============================================================  Functions
+//======  Functions
 //--------------------------------------------------------------  RandomInt
 
 
@@ -93,7 +93,11 @@ void LoadGraphic (short resID)
 
 //--------------------------------------------------------------  CreateOffScreenPixMap
 
+
 // Handles the creation of an offscreen pixmap.  Depth is assumed to be that of the�
+
+// Handles the creation of an offscreen pixmap.  Depth is assumed to be that of the
+
 // current gDevice.  If the allocation fails (low memory, etc.) we quit to Finder.
 
 void CreateOffScreenPixMap (Rect *theRect, CGrafPtr *offScreen)
@@ -150,7 +154,11 @@ void CreateOffScreenPixMap (Rect *theRect, CGrafPtr *offScreen)
 
 //--------------------------------------------------------------  CreateOffScreenBitMap
 
+
 // Creates an offscreen bitmap.  Depth is of course 1 (b & w).  If this function�
+
+// Creates an offscreen bitmap.  Depth is of course 1 (b & w).  If this function
+
 // fails to create the bitmap, we post an alert and quit to the Finder.
 
 void CreateOffScreenBitMap (Rect *theRect, GrafPtr *offScreen)
@@ -192,8 +200,13 @@ void ZeroRectCorner (Rect *theRect)
 
 //--------------------------------------------------------------  FlashShort
 
+
 // This is a simple debugging function that will display the short passed to it�
 // in the upper left corner of the screen.  It's a handy way to watch the value�
+
+// This is a simple debugging function that will display the short passed to it
+// in the upper left corner of the screen.  It's a handy way to watch the value
+
 // of a variable while the program is running.
 
 void FlashShort (short theValue)
@@ -219,10 +232,17 @@ void FlashShort (short theValue)
 
 //--------------------------------------------------------------  LogNextTick
 
+
 // Simple function to set a global (tickNext) to the current TickCount() plus�
 // some offset.  We'll then wait for TickCount() to exceed that global.  We use�
 // this function and the function below to regulate animation speeds (remember�
 // your game may be run on a slow Mac or a fast one - we need a way to keep the�
+
+// Simple function to set a global (tickNext) to the current TickCount() plus
+// some offset.  We'll then wait for TickCount() to exceed that global.  We use
+// this function and the function below to regulate animation speeds (remember
+// your game may be run on a slow Mac or a fast one - we need a way to keep the
+
 // motion consistent.  I love when the comments are longer than the function.
 // (Not really.)
 
@@ -234,7 +254,11 @@ void LogNextTick (long howMany)
 //--------------------------------------------------------------  WaitForNextTick
 
 // This is the companion function to the above function (LogNextTick()).
+
 // We do nothing but loop until TickCount() catches up with (or passes) our�
+
+// We do nothing but loop until TickCount() catches up with (or passes) our
+
 // global variable tickNext.
 
 void WaitForNextTick (void)
@@ -325,7 +349,11 @@ short RectTall (Rect *theRect)
 
 //--------------------------------------------------------------  CenterRectInRect
 
+
 // Nice utility function that takes two rectangles and centers the first�
+
+// Nice utility function that takes two rectangles and centers the first
+
 // rectangle within the second.
 
 void CenterRectInRect (Rect *rectA, Rect *rectB)
@@ -391,7 +419,11 @@ void CenterDialog (short dialogID)
 
 //--------------------------------------------------------------  DrawDefaultButton
 
+
 // A nice dialog function.  This draws the bold default outline around�
+
+// A nice dialog function.  This draws the bold default outline around
+
 // item #1 in the dialog passed in.
 
 void DrawDefaultButton (DialogPtr theDialog)
@@ -409,14 +441,22 @@ void DrawDefaultButton (DialogPtr theDialog)
 
 //--------------------------------------------------------------  PasStringCopyNum
 
+
 // Another function to keep you from using C strings.  This one copies only a�
+
+// Another function to keep you from using C strings.  This one copies only a
+
 // certain number of characters from one Pascal-style string to a second.
 
 void PasStringCopyNum (StringPtr p1, StringPtr p2, short charsToCopy)
 {
 	short		i;
 	
+
 	if (charsToCopy > *p1)		// If trying to copy more chars than there are�
+
+	if (charsToCopy > *p1)		// If trying to copy more chars than there are
+
 		charsToCopy = *p1;		// Reduce the number of chars to copy to this size
 	
 	*p2 = charsToCopy;			// Set 2nd string's length to charsToCopy.
@@ -430,7 +470,11 @@ void PasStringCopyNum (StringPtr p1, StringPtr p2, short charsToCopy)
 
 //--------------------------------------------------------------  GetDialogString
 
+
 // Handy dialog function that returns a dialog item string.  This will be�
+
+// Handy dialog function that returns a dialog item string.  This will be
+
 // especially handy for getting the high score name the player enters.
 
 void GetDialogString (DialogPtr theDialog, short item, StringPtr theString)
@@ -445,7 +489,11 @@ void GetDialogString (DialogPtr theDialog, short item, StringPtr theString)
 
 //--------------------------------------------------------------  SetDialogString
 
+
 // Like the above function, but this one sets a dialog items string to whatever�
+
+// Like the above function, but this one sets a dialog items string to whatever
+
 // you pass in.  We'll use this to set a default high score name.
 
 void SetDialogString (DialogPtr theDialog, short item, StringPtr theString)
@@ -460,7 +508,11 @@ void SetDialogString (DialogPtr theDialog, short item, StringPtr theString)
 
 //--------------------------------------------------------------  SetDialogNumToStr
 
+
 // This one is like SetDialogString() above, but it takes a number (long)�
+
+// This one is like SetDialogString() above, but it takes a number (long)
+
 // instead of a string (the function will convert the long to a string for us).
 
 void SetDialogNumToStr (DialogPtr theDialog, short item, long theNumber)
@@ -477,7 +529,11 @@ void SetDialogNumToStr (DialogPtr theDialog, short item, long theNumber)
 
 //--------------------------------------------------------------  GetDialogNumFromStr
 
+
 // This one is like GetDialogString() above, but returns a long (number)�
+
+// This one is like GetDialogString() above, but returns a long (number)
+
 // instead of a string (it does this by converting the string to a long).
 
 void GetDialogNumFromStr (DialogPtr theDialog, short item, long *theNumber)
@@ -507,4 +563,8 @@ void DisableControl (DialogPtr theDialog, short whichItem)
 	HiliteControl((ControlHandle)iHandle, kInactive);
 }
 
+
 */
+
+*/
+

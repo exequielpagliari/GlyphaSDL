@@ -566,5 +566,5 @@ void DisableControl (DialogPtr theDialog, short whichItem)
 
 */
 
-*/
+
 

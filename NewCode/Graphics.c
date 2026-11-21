@@ -38,7 +38,7 @@ SDL_Rect		flameSrcRect, flameDestRects[2], flameRects[4], eggSrcRect; //Rect
 Rect		platformSrcRect, platformCopyRects[9], helpSrcRect, eyeSrcRect;
 SDL_Rect		helpSrc, helpDest, handSrcRect, handRects[2], eyeRects[4]; //Rect
 Point		leftLightningPts[kNumLightningPts], rightLightningPts[kNumLightningPts];
-TexturePtr		backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap, eyeSrcMap;//CGrafPtr
+TexturePtr		mainWindowTexture, backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap, eyeSrcMap;//CGrafPtr
 TexturePtr	numberSrcMap, idleSrcMap, enemyWalkSrcMap, enemyFlySrcMap; //CGrafPtr
 TexturePtr	flameSrcMap, eggSrcMap, platformSrcMap, helpSrcMap, handSrcMap;//CGrafPtr
 TexturePtr		playerMaskMap, enemyWalkMaskMap, enemyFlyMaskMap, eggMaskMap; //GrafPtr
@@ -633,6 +633,20 @@ void QuickUnionRect (Rect *rect1, Rect *rect2, Rect *whole)
 	}
 }
 */
+
+static SDL_Rect ClipUpdateRect(SDL_Rect rect)
+{
+	SDL_Rect bounds = { 0, 0, 640, 480 };
+	SDL_Rect result;
+
+	if (!SDL_IntersectRect(&rect, &bounds, &result))
+	{
+		SDL_Rect empty = { 0, 0, 0, 0 };
+		return empty;
+	}
+
+	return result;
+}
 //--------------------------------------------------------------  AddToUpdateRects
 
 // This is an elegant way to handle game animation.  It has some drawbacks, butÉ
@@ -645,41 +659,32 @@ void QuickUnionRect (Rect *rect1, Rect *rect2, Rect *whole)
 // moved to the screen (the shpinx or whatever).  This routine will take care ofÉ
 // drawing the shinx or whatever to the screen.
 
-void AddToUpdateRects (SDL_Rect *theRect) //Rect
+void AddToUpdateRects(SDL_Rect* theRect)
 {
-	if (whichList)		// We alternate every odd frame between two listsÉ
-	{					// in order to hold a copy of rects from last frame.
-		if (numUpdateRects1 < (kMaxNumUpdateRects - 1))
-		{				// If we are below the maximum # of rects we can handleÉ
-						// Add the rect to the list (array).
-			updateRects1[numUpdateRects1] = *theRect;
-						// Increment the number of rects held in list.
+	SDL_Rect clippedRect;
+
+	if (!theRect)
+		return;
+
+	clippedRect = ClipUpdateRect(*theRect);
+
+	if (clippedRect.w <= 0 || clippedRect.h <= 0)
+		return;
+
+	if (whichList)
+	{
+		if (numUpdateRects1 < kMaxNumUpdateRects)
+		{
+			updateRects1[numUpdateRects1] = clippedRect;
 			numUpdateRects1++;
-						// Do simple bounds checking (clip to screen).
-			if (updateRects1[numUpdateRects1].x < 0) //x
-				updateRects1[numUpdateRects1].x = 0; //x
-			else if (updateRects1[numUpdateRects1].w > 640) //right
-				updateRects1[numUpdateRects1].w = 640; //right
-			if (updateRects1[numUpdateRects1].y < 0) //top
-				updateRects1[numUpdateRects1].y = 0; //top
-			else if (updateRects1[numUpdateRects1].h > 480) //bottom
-				updateRects1[numUpdateRects1].h = 480; //bottom
 		}
 	}
-	else				// Exactly like the above section, but with the other list.
+	else
 	{
-		if (numUpdateRects2 < (kMaxNumUpdateRects - 1))
+		if (numUpdateRects2 < kMaxNumUpdateRects)
 		{
-			updateRects2[numUpdateRects2] = *theRect;
+			updateRects2[numUpdateRects2] = clippedRect;
 			numUpdateRects2++;
-			if (updateRects2[numUpdateRects2].x < 0) //x
-				updateRects2[numUpdateRects2].x = 0; //x
-			else if (updateRects2[numUpdateRects2].w > 640) //right
-				updateRects2[numUpdateRects2].w = 640; //right
-			if (updateRects2[numUpdateRects2].y < 0) //top
-				updateRects2[numUpdateRects2].y = 0; //top
-			else if (updateRects2[numUpdateRects2].h > 480) //bottom
-				updateRects2[numUpdateRects2].h = 480; //bottom
 		}
 	}
 }
@@ -769,48 +774,36 @@ void CheckPlayerWrapAround (void)
 // This handles drawing the two torch's flames.  It chooses randomly fromÉ
 // 4 torch graphics and draws right over the old torches.
 */
-void DrawTorches (void)
+void DrawTorches(void)
 {
-	short		who;
+	short who = RandomInt(4);
 
-	who = RandomInt(4);
-
-
-
-
-
-	if (evenFrame) {
-		SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
-	&flameDestRects[0]);
-		AddToUpdateRects(&flameDestRects[0]);
-	}
-	else {
-		SDL_RenderCopy(renderer, flameSrcMap, &flameRects[who],
-	&flameDestRects[1]);
-		AddToUpdateRects(&flameDestRects[1]);
-	}
-
-
-	/*
-	short		who;
-	
-	who = RandomInt(4);
-	if (evenFrame)		// Only draw 1 torch - left on even framesÉ
+	if (evenFrame)
 	{
-		CopyBits(&((GrafPtr)flameSrcMap)->portBits, 
-				&((GrafPtr)workSrcMap)->portBits, 
-				&flameRects[who], &flameDestRects[0], srcCopy, 0L);
+		CopyBits_SDL(
+			renderer,
+			flameSrcMap,
+			workSrcMap,
+			&flameRects[who],
+			&flameDestRects[0]
+		);
+
 		AddToUpdateRects(&flameDestRects[0]);
 	}
-	else				// and draw the right torch on odd frames.
-	{					// We do this even/odd thing for speed.  Why draw both?
-		CopyBits(&((GrafPtr)flameSrcMap)->portBits, 
-				&((GrafPtr)workSrcMap)->portBits, 
-				&flameRects[who], &flameDestRects[1], srcCopy, 0L);
+	else
+	{
+		CopyBits_SDL(
+			renderer,
+			flameSrcMap,
+			workSrcMap,
+			&flameRects[who],
+			&flameDestRects[1]
+		);
+
 		AddToUpdateRects(&flameDestRects[1]);
 	}
-	*/
 }
+
 /*
 //--------------------------------------------------------------  DrawHand
 
@@ -870,88 +863,108 @@ void DrawEye (void)
 
 void CopyAllRects(void)
 {
-	/*
-	SDL_RenderCopy(renderer, backSrcMap, &backSrcRect, &backSrcRect);
-	SDL_RenderCopy(renderer, obeliskSrcMap, &obeliskRects[0], &obSrcRect);
-	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[0], &flameSrcRect);
-	SDL_RenderCopy(renderer, flameSrcMap, &flameRects[1], &flameSrcRect);
-	*/
+	short i;
 
+	printf(
+		"CopyAllRects | whichList=%d | num1=%d | num2=%d\n",
+		whichList,
+		numUpdateRects1,
+		numUpdateRects2
+	);
 
-	short		i;
-	
-	if (whichList)	// Every other frame, we alternate which list we use.
-	{				// Copy new graphics to screen (sphinxes, player, etc.).
-		for (i = 0; i < numUpdateRects1; i++)
-		{
-
-			CopyBits_SDL(renderer,workSrcMap,&updateRects1[i],&updateRects1[i]);
-
-
-			/*
-			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
-					&(((GrafPtr)mainWindow)->portBits), 
-					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
-					*/
-		}
-					// Patch up old graphics from last frame (old sphinx locations, etc.).
+	if (whichList)
+	{
+		// 1. Restore previous graphics → persistent main window.
 		for (i = 0; i < numUpdateRects2; i++)
 		{
-			CopyBits_SDL(renderer, workSrcMap,&updateRects2[i], &updateRects2[i]);
-			/*
-			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
-					&(((GrafPtr)mainWindow)->portBits), 
-					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
-					*/
+			CopyBits_SDL(
+				renderer,
+				backSrcMap,
+				mainWindowTexture,
+				&updateRects2[i],
+				&updateRects2[i]
+			);
 		}
-					// Clean up offscreen (get rid of sphinxes, etc.).
+
+		// 2. New graphics → persistent main window.
 		for (i = 0; i < numUpdateRects1; i++)
 		{
-			CopyBits_SDL(renderer,backSrcMap,&updateRects1[i],&updateRects1[i]);
-			/*
-			CopyBits(&((GrafPtr)backSrcMap)->portBits, 
-					&((GrafPtr)workSrcMap)->portBits, 
-					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
-					*/
+			CopyBits_SDL(
+				renderer,
+				workSrcMap,
+				mainWindowTexture,
+				&updateRects1[i],
+				&updateRects1[i]
+			);
 		}
-		
-		numUpdateRects2 = 0;	// Reset number of rects to zero.
-		whichList = !whichList;	// Toggle flag to use other list next frame.
+
+		// 3. Restore current graphics in work buffer.
+		for (i = 0; i < numUpdateRects1; i++)
+		{
+			CopyBits_SDL(
+				renderer,
+				backSrcMap,
+				workSrcMap,
+				&updateRects1[i],
+				&updateRects1[i]
+			);
+		}
+
+		numUpdateRects2 = 0;
+		whichList = !whichList;
 	}
 	else
-	{				// Copy new graphics to screen (sphinxes, player, etc.).
-		for (i = 0; i < numUpdateRects2; i++)
-		{
-			CopyBits_SDL(renderer, workSrcMap,&updateRects2[i], &updateRects2[i]);
-			/*
-			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
-					&(((GrafPtr)mainWindow)->portBits), 
-					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);*/
-		}
-					// Patch up old graphics from last frame (old sphinx locations, etc.).
+	{
+		// 1. Restore previous graphics → persistent main window.
 		for (i = 0; i < numUpdateRects1; i++)
 		{
-			CopyBits_SDL(renderer,workSrcMap,&updateRects1[i],&updateRects1[i]);
-			/*
-			CopyBits(&((GrafPtr)workSrcMap)->portBits, 
-					&(((GrafPtr)mainWindow)->portBits), 
-					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
-					*/
+			CopyBits_SDL(
+				renderer,
+				backSrcMap,
+				mainWindowTexture,
+				&updateRects1[i],
+				&updateRects1[i]
+			);
 		}
-					// Clean up offscreen (get rid of sphinxes, etc.).
+
+		// 2. New graphics → persistent main window.
 		for (i = 0; i < numUpdateRects2; i++)
 		{
-			CopyBits_SDL(renderer,backSrcMap,&updateRects2[i],&updateRects2[i]);
-			/*
-			CopyBits(&((GrafPtr)backSrcMap)->portBits, 
-					&((GrafPtr)workSrcMap)->portBits, 
-					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
-					*/
+			CopyBits_SDL(
+				renderer,
+				workSrcMap,
+				mainWindowTexture,
+				&updateRects2[i],
+				&updateRects2[i]
+			);
 		}
-		
-		numUpdateRects1 = 0;	// Reset number of rects to zero.
-		whichList = !whichList;	// Toggle flag to use other list next frame.
+
+		// 3. Restore current graphics in work buffer.
+		for (i = 0; i < numUpdateRects2; i++)
+		{
+			CopyBits_SDL(
+				renderer,
+				backSrcMap,
+				workSrcMap,
+				&updateRects2[i],
+				&updateRects2[i]
+			);
+		}
+
+		numUpdateRects1 = 0;
+		whichList = !whichList;
 	}
+
+	// Present persistent main window.
+	SDL_SetRenderTarget(renderer, NULL);
+
+	SDL_RenderCopy(
+		renderer,
+		mainWindowTexture,
+		NULL,
+		NULL
+	);
+	
 	SDL_RenderPresent(renderer);
 }
 /*

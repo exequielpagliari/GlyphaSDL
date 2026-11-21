@@ -74,16 +74,24 @@ void SetRect(SDL_Rect *rect, int x, int y, int w, int h) {
 }
 
 void OffsetRect(SDL_Rect *rect, int x, int y) {
-    rect->x = x;
-    rect->y = y;
+    rect->x += x;
+    rect->y += y;
 };
 
-void CopyBits_SDL(SDL_Renderer* ren,
-                  TexturePtr srcTex,
-                  SDL_Rect* srcRect,
-                  SDL_Rect* dstRect)
+int CopyBits_SDL(SDL_Renderer* r, TexturePtr src, TexturePtr dst,
+    SDL_Rect* s, SDL_Rect* d)
 {
-    SDL_RenderCopy(ren, srcTex, srcRect, dstRect);
+    if (!src || !dst) {
+        SDL_Log("CopyBits_SDL: textura NULL (src=%p dst=%p)", (void*)src, (void*)dst);
+        return -1;
+    }
+    if (SDL_SetRenderTarget(r, dst) != 0) {
+        SDL_Log("SetRenderTarget: %s", SDL_GetError());
+        return -1;
+    }
+    int rc = SDL_RenderCopy(r, src, s, d);
+    if (rc != 0) SDL_Log("RenderCopy: %s", SDL_GetError());
+    return rc;
 }
 
 void ZeroRectCorner(SDL_Rect *theRect)

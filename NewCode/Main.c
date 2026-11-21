@@ -113,8 +113,10 @@ int main (int argc, char* argv[])
 	do						// Here begins the main loop.
 	{
 		HandleEvent();		// Check for events.
+		
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
+
 
 
 		if ((playing) && (!pausing))
@@ -124,7 +126,7 @@ int main (int argc, char* argv[])
 
 			tickWait = TickCount() + 2L;
 			evenFrame = !evenFrame;
-			//DrawTorches();	// Flicker torches.
+			DrawTorches();	// Flicker torches.
 
 			CopyAllRects();	// Refresh screen.
 			//LogNextTick(50);
@@ -133,7 +135,7 @@ int main (int argc, char* argv[])
 			{
 			}
 			while (TickCount() < tickWait);
-
+			
 		}
 
 	}

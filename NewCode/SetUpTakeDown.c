@@ -23,7 +23,7 @@
 //#include <Palettes.h>					// Need "Palettes.h" for the depth calls.
 
 
-#define kImagePath "../Img/"
+#define kImagePath "Img/"
 #define kBmp ".bmp"
 
 #define kHandPictID				128		// These are all the resource ID's for 
@@ -48,7 +48,7 @@
 
 //ScreenDefine
 #define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_HEIGHT 460
 
 
 Boolean DoWeHaveColor (void);			// Prototypes to below functions that are 
@@ -71,7 +71,7 @@ extern	SDL_Rect		enemyInitRects[5], eggSrcRect, platformSrcRect, helpSrcRect;
 extern	SDL_Rect		handRects[2], grabZone, eyeSrcRect, eyeRects[4];
 
 extern	GDHandle	thisGDevice;
-extern	TexturePtr	backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap; //CGrafPtr
+extern	TexturePtr	mainWindowTexture, backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap; //CGrafPtr
 extern	TexturePtr	numberSrcMap, idleSrcMap, enemyWalkSrcMap, enemyFlySrcMap; //CGrafPtr
 extern	TexturePtr	flameSrcMap, eggSrcMap, platformSrcMap, helpSrcMap, handSrcMap; //CGrafPtr
 extern	TexturePtr	eyeSrcMap; //CGrafPtr
@@ -386,46 +386,75 @@ void InitVariables (void) {
 	//	scoresOpen = FALSE;
 	openTheScores = FALSE;
 
-	SetRect(&workSrcRect, 0, 0, 640, 480);
-	SetRect(&backSrcRect, 0, 0, 640, 480);
+	SetRect(&workSrcRect, 0, 0, 640, 460);
+	SetRect(&backSrcRect, 0, 0, 640, 460);
 	char buffer_int[16];
-	sprintf(buffer_int, "%s%d%s", kImagePath, kBackgroundPictID, kBmp);
+	// Background source texture
+	sprintf(buffer_int, "%s%d%s",
+		kImagePath, kBackgroundPictID, kBmp);
 
 	backSrcMap = loadTexture(buffer_int);
-	SDL_QueryTexture(backSrcMap, NULL, NULL, &backSrcRect.w, &backSrcRect.h);
-	SDL_RenderCopy(renderer, backSrcMap, &backSrcRect, &backSrcRect);
+
+	if (!backSrcMap)
+	{
+		SDL_Log("Error loading background: %s", SDL_GetError());
+		return;
+	}
+
+	// Get background dimensions
+	SDL_QueryTexture(
+		backSrcMap,
+		NULL,
+		NULL,
+		&backSrcRect.w,
+		&backSrcRect.h
+	);
+
+	// Create working buffer
+	workSrcMap = SDL_CreateTexture(
+		renderer,
+		SDL_PIXELFORMAT_RGBA8888,
+		SDL_TEXTUREACCESS_TARGET,
+		640,
+		460
+	);
+
+	if (!workSrcMap)
+	{
+		SDL_Log("Error creating workSrcMap: %s", SDL_GetError());
+		return;
+	}
+
+	// Create persistent window buffer
+	mainWindowTexture = SDL_CreateTexture(
+		renderer,
+		SDL_PIXELFORMAT_RGBA8888,
+		SDL_TEXTUREACCESS_TARGET,
+		640,
+		460
+	);
+
+	if (!mainWindowTexture)
+	{
+		SDL_Log("Error creating mainWindowTexture: %s", SDL_GetError());
+		return;
+	}
+
+	// Initialize work buffer with background
+	SDL_SetRenderTarget(renderer, workSrcMap);
+	SDL_RenderCopy(renderer, backSrcMap, NULL, NULL);
+
+	// Initialize persistent buffer with background
+	SDL_SetRenderTarget(renderer, mainWindowTexture);
+	SDL_RenderCopy(renderer, backSrcMap, NULL, NULL);
+
+	// Restore default render target
+	SDL_SetRenderTarget(renderer, NULL);
 
 
-	/*
-	numLedges = 3;					// Number of ledges in the "arena".
-	beginOnLevel = 1;				// First level to begin playing.typedef unsigned char Str15[16];
-	levelOn = 0;					// Level number player is on.
-	livesLeft = kInitNumLives;		// Number of player lives.
-	theScore = 0L;					// Player's score (notice it's a long!).
-	wasTensOfThousands = 0L;		// For tracking when player gets an extra life.
-	GenerateLightning(320, 240);	// Initialize a lightning bolt.
-	
-	backSrcRect = mainWindowRect;	// Create background offscreen pixmap.
-	ZeroRectCorner(&backSrcRect);
-	backSrcMap = 0L;
-	CreateOffScreenPixMap(&backSrcRect, &backSrcMap);
-	LoadGraphic(kBackgroundPictID);
-	
 	workSrcRect = mainWindowRect;	// Create "work" offscreen pixmap.
 	ZeroRectCorner(&workSrcRect);
-	workSrcMap = 0L;
-	CreateOffScreenPixMap(&workSrcRect, &workSrcMap);
-	*/
-
-	backSrcRect = mainWindowRect;	// Create background offscreen pixmap.
-	ZeroRectCorner(&backSrcRect);
-	backSrcMap = 0L;
-
-
-
-	workSrcRect = mainWindowRect;	// Create "work" offscreen pixmap.
-	ZeroRectCorner(&workSrcRect);
-	workSrcMap = 0L;
+	//workSrcMap = 0L;
 
 	SetRect(&obSrcRect, 0, 0, 20, 418);
 
@@ -600,6 +629,10 @@ void InitVariables (void) {
 		SetRect(&flameRects[i], 0, 0, 16, 16);
 		OffsetRect(&flameRects[i], 0, i * 16);
 	}
+
+	SDL_Log("flameDest[0]=%d,%d,%d,%d  addr=%p", flameDestRects[0].x, flameDestRects[0].y,
+		flameDestRects[0].w, flameDestRects[0].h, (void*)&flameDestRects[0]);
+	SDL_Log("platformCopy[7] addr=%p", (void*)&platformCopyRects[7]);
 	/*
 	SetRect(&flameSrcRect, 0, 0, 16, 64);
 	flameSrcMap = 0L;				// Create pixmap to hold "torch" graphics.
@@ -736,6 +769,8 @@ void InitVariables (void) {
 	helpSrcMap = loadTexture(buffer_int);
 	
 	//SetPort((GrafPtr)mainWindow);
+
+
 
 }
 

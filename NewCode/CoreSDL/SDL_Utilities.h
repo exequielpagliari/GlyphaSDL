@@ -265,10 +265,12 @@ typedef int KeyMap;
 typedef SDL_Texture Texture;
 typedef Texture *TexturePtr;
 SDL_Texture *loadTexture(char *filename);
-void CopyBits_SDL(SDL_Renderer* ren,
-                  SDL_Texture* srcTex,
-                  SDL_Rect* srcRect,
-                  SDL_Rect* dstRect);
+int CopyBits_SDL(
+    SDL_Renderer* renderer,
+    TexturePtr srcTex,
+    TexturePtr dstTex,
+    SDL_Rect* srcRect,
+    SDL_Rect* dstRect);
 void ZeroRectCorner (SDL_Rect *theRect);
 //SDL_Rect		mainWindowRect; //Rect
 #endif //NEWCODE_SDL_UTILITIES_H

@@ -16,6 +16,12 @@ extern SDL_Renderer *renderer;
 extern Boolean quitting;
 long tickWait;
 
+short TickCount(void);
+void WaitForNextTick(void);
+void DrawTorches(void);
+void CopyAllRects(void);
+void ShutItDown(void);
+
 static int TestRandom(void)
 {
     /*

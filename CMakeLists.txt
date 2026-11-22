@@ -16,7 +16,7 @@ include_directories(${SDL2_MIXER_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES("Img")
 add_executable(NewCode
         src/Enemy.c
-        include/Externs.h
+        src/Externs.h
         src/Graphics.c
         src/Interface.c
         src/Main.c

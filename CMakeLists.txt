@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(NewCode C)
+project(GlyphaSDL C)
 
 set(CMAKE_C_STANDARD 11)
 
@@ -14,7 +14,7 @@ include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(${SDL2_MIXER_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES("Img")
-add_executable(NewCode
+add_executable(GlyphaSDL
         src/Enemy.c
         src/Externs.h
         src/Graphics.c
@@ -37,4 +37,4 @@ add_executable(NewCode
 		Tests/TestRunner.h
 )
 
-target_link_libraries(NewCode ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})
+target_link_libraries(GlyphaSDL ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})

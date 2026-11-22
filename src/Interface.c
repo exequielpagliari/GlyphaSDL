@@ -32,7 +32,9 @@ void DoAppleMenu (short);
 void DoGameMenu (short);
 void DoOptionsMenu (short);
 void UpdateMainWindow (void);
-void HandleMouseEvent (EventRecord *);
+*/
+void HandleMouseEvent (/*EventRecord*/);
+/*
 void HandleKeyEvent (EventRecord *);
 void HandleUpdateEvent (EventRecord *);
 void HandleOSEvent (EventRecord *);

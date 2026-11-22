@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 extern Point mousePoint;
-
+void HandleMouseEvent();
 void HandleEvent(){
 SDL_Event ev;
 while( SDL_PollEvent( &ev ) )

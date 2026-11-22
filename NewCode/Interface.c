@@ -45,11 +45,13 @@ void DoGameSettings (void);
 WindowPtr	mainWindow;
 MenuHandle	appleMenu, gameMenu, optionsMenu;
 Boolean		switchedOut, quitting, canPlay, openTheScores;
+Point		mousePoint;
 
 extern	prefsInfo	thePrefs;
 extern	Rect		backSrcRect, workSrcRect;
 extern	CGrafPtr	backSrcMap, workSrcMap;
 extern	Boolean		pausing, playing, helpOpen, scoresOpen;
+
 
 /*
 //==============================================================  Functions
@@ -275,21 +277,22 @@ void UpdateMainWindow (void)
 }
 
 //--------------------------------------------------------------  HandleMouseEvent
-
+*/
 // Mouse clicks come here.  This is standard event-handling drivel.  No different 
 // from any other standard Mac program (game or otherwise).
 
-void HandleMouseEvent (EventRecord *theEvent)
+void HandleMouseEvent (/*EventRecord* theEvent*/)
 {
 	WindowPtr	whichWindow;
 	Point		localPoint;
 	long		menuChoice;
 	short		thePart;
-												// Determine window and where in window.
+	/*										// Determine window and where in window.
 	thePart = FindWindow(theEvent->where, &whichWindow);
 	
 	switch (thePart)							// Depending on where mouse was clickedÉ
 	{
+		/*
 		case inSysWindow:						// In a Desk Accesory.
 		SystemClick(theEvent, whichWindow);		// (Is this stuff obsolete yet?)
 		break;
@@ -308,44 +311,46 @@ void HandleMouseEvent (EventRecord *theEvent)
 		break;
 		
 		case inContent:							// Click in the window itself.
+		*/
 		FlashObelisks(TRUE);					// Do lightning animation.
 		LogNextTick(3);							// Lightning will hit cursor location.
-		localPoint = theEvent->where;
-		GlobalToLocal(&localPoint);
-		GenerateLightning(localPoint.h, localPoint.v);
+		//localPoint = theEvent->where;
+		localPoint = mousePoint;
+		//GlobalToLocal(&localPoint);
+		GenerateLightning(localPoint.x, localPoint.y);
 		StrikeLightning();
 		WaitForNextTick();
 		StrikeLightning();
 		LogNextTick(2);
 		WaitForNextTick();
-		PlayExternalSound(kLightningSound, kLightningPriority);
+		//PlayExternalSound(kLightningSound, kLightningPriority);
 		LogNextTick(3);
-		GenerateLightning(localPoint.h, localPoint.v);
+		GenerateLightning(localPoint.x, localPoint.y);
 		StrikeLightning();
 		WaitForNextTick();
 		StrikeLightning();
 		LogNextTick(2);
 		WaitForNextTick();
 		LogNextTick(3);
-		GenerateLightning(localPoint.h, localPoint.v);
+		GenerateLightning(localPoint.x, localPoint.y);
 		StrikeLightning();
 		WaitForNextTick();
 		StrikeLightning();
 		LogNextTick(2);
 		WaitForNextTick();
-		PlayExternalSound(kLightningSound, kLightningPriority);
+		//PlayExternalSound(kLightningSound, kLightningPriority);
 		LogNextTick(3);
-		GenerateLightning(localPoint.h, localPoint.v);
+		GenerateLightning(localPoint.x, localPoint.y);
 		StrikeLightning();
 		WaitForNextTick();
 		StrikeLightning();
 		LogNextTick(2);
 		WaitForNextTick();
 		FlashObelisks(FALSE);
-		break;
-	}
+		//break;
+	//}
 }
-
+/*
 //--------------------------------------------------------------  HandleKeyEvent
 
 // More standard issue.  This function handles any keystrokes when no game is

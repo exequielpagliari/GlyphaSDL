@@ -82,7 +82,7 @@ extern	RgnHandle	playRgn;
 extern	MenuHandle	appleMenu, gameMenu, optionsMenu;
 extern	long		theScore, wasTensOfThousands;
 extern	short		numLedges, beginOnLevel, levelOn, livesLeft;
-extern	Boolean		quitting, playing, pausing, switchedOut, canPlay, whichList;
+extern	Boolean		quitting, playing, pausing, switchedOut, canPlay, whichList, lightningOn;
 extern	Boolean		helpOpen, scoresOpen, openTheScores;
 
 SDL_Renderer *renderer;
@@ -376,7 +376,7 @@ void InitMenubar (void)
 
 void InitVariables (void) {
 	short		i;
-	
+	lightningOn = FALSE;	// I won't describe every one of these, many are
 	quitting = FALSE;	// I won't describe every one of these, many are 
 	playing = FALSE;	// self explanatory.  Suffice it to say that first 
 	pausing = FALSE;	// I'm initializing all the Boolean variables.
@@ -454,7 +454,7 @@ void InitVariables (void) {
 
 	workSrcRect = mainWindowRect;	// Create "work" offscreen pixmap.
 	ZeroRectCorner(&workSrcRect);
-	//workSrcMap = 0L;
+
 
 	SetRect(&obSrcRect, 0, 0, 20, 418);
 
@@ -485,7 +485,7 @@ void InitVariables (void) {
 
 
 
-	SDL_QueryTexture(obeliskSrcMap, NULL, NULL, &obeliskRects[0].w, &obeliskRects[0].h);
+	//SDL_QueryTexture(obeliskSrcMap, NULL, NULL, &obeliskRects[0].w, &obeliskRects[0].h);
 	//SDL_RenderCopy(renderer, obeliskSrcMap, &obeliskRects[0], &mainWindowRect);
 	//SDL_RenderPresent(renderer);
 

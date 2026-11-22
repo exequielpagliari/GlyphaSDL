@@ -18,7 +18,7 @@ add_executable(NewCode
         Enemy.c
         Externs.h
         Graphics.c
-        #Interface.c
+        Interface.c
         Main.c
         Play.c
         #Prefs.c

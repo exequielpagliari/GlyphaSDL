@@ -66,11 +66,11 @@ Texture *loadTexture(char *filename) {
 }
 
 
-void SetRect(SDL_Rect *rect, int x, int y, int w, int h) {
-    rect->x = x;
-    rect->y = y;
-    rect->h = h;
-    rect->w = w;
+void SetRect(SDL_Rect* rect, int left, int top, int right, int bottom) {
+    rect->x = left;
+    rect->y = top;
+    rect->w = right - left;
+    rect->h = bottom - top;
 }
 
 void OffsetRect(SDL_Rect *rect, int x, int y) {

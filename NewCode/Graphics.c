@@ -28,6 +28,7 @@ void DrawEye (void);
 void DrawPlayer (void);
 void CheckEnemyWrapAround (short);
 void DrawEnemies (void);
+void DrawLightning(void);
 
 
 SDL_Rect	backSrcRect, workSrcRect, obSrcRect, playerSrcRect; //Rect
@@ -35,7 +36,7 @@ SDL_Rect		numberSrcRect, idleSrcRect, enemyWalkSrcRect, enemyFlySrcRect; //Rect
 SDL_Rect	obeliskRects[4], playerRects[11], numbersSrc[11], numbersDest[11]; //Rect
 SDL_Rect		updateRects1[kMaxNumUpdateRects], updateRects2[kMaxNumUpdateRects]; //Rect
 SDL_Rect		flameSrcRect, flameDestRects[2], flameRects[4], eggSrcRect; //Rect
-Rect		platformSrcRect, platformCopyRects[9], helpSrcRect, eyeSrcRect;
+SDL_Rect		platformSrcRect, platformCopyRects[9], helpSrcRect, eyeSrcRect;
 SDL_Rect		helpSrc, helpDest, handSrcRect, handRects[2], eyeRects[4]; //Rect
 Point		leftLightningPts[kNumLightningPts], rightLightningPts[kNumLightningPts];
 TexturePtr		mainWindowTexture, backSrcMap, workSrcMap, obeliskSrcMap, playerSrcMap, eyeSrcMap;//CGrafPtr
@@ -45,18 +46,19 @@ TexturePtr		playerMaskMap, enemyWalkMaskMap, enemyFlyMaskMap, eggMaskMap; //Graf
 TexturePtr		handMaskMap, eyeMaskMap; //GrafPtr
 RgnHandle	playRgn;
 short		numUpdateRects1, numUpdateRects2;
-Boolean		whichList, helpOpen, scoresOpen;
+Boolean		whichList, helpOpen, scoresOpen, lightningOn;
 
 extern	handInfo	theHand;
 extern	eyeInfo		theEye;
 extern	prefsInfo	thePrefs;
 extern	playerType	thePlayer;
 extern	enemyType	theEnemies[];
-extern	Rect		enemyRects[24];
+extern	SDL_Rect	enemyRects[24];
 extern	WindowPtr	mainWindow;
 extern	long		theScore, wasTensOfThousands;
 extern	short		livesLeft, levelOn, numEnemies;
 extern	Boolean		evenFrame;
+extern	Point		mousePoint;
 
 /*
 //==============================================================  Functions
@@ -474,7 +476,7 @@ void UpdateLevelNumbers (void)
 			&(((GrafPtr)mainWindow)->portBits), 
 			&numbersDest[10], &numbersDest[10], srcCopy, 0L);
 }
-
+*/
 //--------------------------------------------------------------  GenerateLightning
 
 // This function takes a point (h and v) and then generates two lightning boltsÉ
@@ -500,17 +502,17 @@ void GenerateLightning (short h, short v)
 	
 	for (i = 0; i < kNumLightningPts; i++)		// Calculate an even spread of points betweenÉ
 	{											// obelisk tips and the target point.
-		leftLightningPts[i].h = (leftDeltaH * i) / (kNumLightningPts - 1) + kLeftObeliskH;
-		leftLightningPts[i].v = (leftDeltaV * i) / (kNumLightningPts - 1) + kLeftObeliskV;
-		rightLightningPts[i].h = (rightDeltaH * i) / (kNumLightningPts - 1) + kRightObeliskH;
-		rightLightningPts[i].v = (rightDeltaV * i) / (kNumLightningPts - 1) + kRightObeliskV;
+		leftLightningPts[i].x = (leftDeltaH * i) / (kNumLightningPts - 1) + kLeftObeliskH;
+		leftLightningPts[i].y = (leftDeltaV * i) / (kNumLightningPts - 1) + kLeftObeliskV;
+		rightLightningPts[i].x = (rightDeltaH * i) / (kNumLightningPts - 1) + kRightObeliskH;
+		rightLightningPts[i].y = (rightDeltaV * i) / (kNumLightningPts - 1) + kRightObeliskV;
 	}
 	
 	range = kWander * 2 + 1;					// Randomly scatter the points verticallyÉ
 	for (i = 1; i < kNumLightningPts - 1; i++)	// but NOT the 1st or last points.
 	{
-		leftLightningPts[i].v += RandomInt(range) - kWander;
-		rightLightningPts[i].v += RandomInt(range) - kWander;
+		leftLightningPts[i].y += RandomInt(range) - kWander;
+		rightLightningPts[i].y += RandomInt(range) - kWander;
 	}
 }
 
@@ -522,8 +524,18 @@ void GenerateLightning (short h, short v)
 
 void FlashObelisks (Boolean flashThem)
 {	
+	if (flashThem) {
+		CopyBits_SDL(renderer, obeliskSrcMap, mainWindowTexture, &obeliskRects[0], &obeliskRects[2]);
+		CopyBits_SDL(renderer, obeliskSrcMap, mainWindowTexture, &obeliskRects[1], &obeliskRects[3]);
+	}
+	else {
+		CopyBits_SDL(renderer, backSrcMap, mainWindowTexture, &obeliskRects[2], &obeliskRects[2]);
+		CopyBits_SDL(renderer, backSrcMap, mainWindowTexture, &obeliskRects[3], &obeliskRects[3]);
+	}
+	/*
 	if (flashThem)		// Draw them "inverted"
 	{
+		
 		CopyBits(&((GrafPtr)obeliskSrcMap)->portBits, 
 				&(((GrafPtr)mainWindow)->portBits), 
 				&obeliskRects[0], &obeliskRects[2], 
@@ -532,9 +544,11 @@ void FlashObelisks (Boolean flashThem)
 				&(((GrafPtr)mainWindow)->portBits), 
 				&obeliskRects[1], &obeliskRects[3], 
 				srcCopy, 0L);
+				
 	}
 	else			// Draw them "normal"
 	{
+		
 		CopyBits(&((GrafPtr)backSrcMap)->portBits, 
 				&(((GrafPtr)mainWindow)->portBits), 
 				&obeliskRects[2], &obeliskRects[2], 
@@ -544,6 +558,7 @@ void FlashObelisks (Boolean flashThem)
 				&obeliskRects[3], &obeliskRects[3], 
 				srcCopy, 0L);
 	}
+	*/
 }
 
 //--------------------------------------------------------------  StrikeLightning
@@ -552,31 +567,69 @@ void FlashObelisks (Boolean flashThem)
 // so that the lines are drawn inverted (colorwise).  This way, drawing theÉ
 // lightning twice over will leave no pixels disturbed.
 
+
 void StrikeLightning (void)
 {
+	lightningOn = !lightningOn;
+
+	SDL_SetRenderTarget(renderer, NULL);
+	SDL_RenderCopy(renderer, mainWindowTexture, NULL, NULL);
+	DrawLightning();                  // <-- nuevo
+	SDL_RenderPresent(renderer);
+
+	/*
 	short		i;
 	
 	SetPort((GrafPtr)mainWindow);				// Draw straight to screen.
 	PenSize(1, 2);								// Use a tall pen.
 	PenMode(patXor);							// Use XOR mode.
 												// Draw lightning bolts with inverted pen.
-	MoveTo(leftLightningPts[0].h, leftLightningPts[0].v);
+	MoveTo(leftLightningPts[0].x, leftLightningPts[0].y);
 	for (i = 0; i < kNumLightningPts - 1; i++)	// Draw left lightning bolt.
 	{
-		MoveTo(leftLightningPts[i].h, leftLightningPts[i].v);
-		LineTo(leftLightningPts[i + 1].h - 1, leftLightningPts[i + 1].v);
+		MoveTo(leftLightningPts[i].x, leftLightningPts[i].y);
+		LineTo(leftLightningPts[i + 1].x - 1, leftLightningPts[i + 1].y);
 	}
 	
-	MoveTo(rightLightningPts[0].h, rightLightningPts[0].v);
+	MoveTo(rightLightningPts[0].x, rightLightningPts[0].y);
 	for (i = 0; i < kNumLightningPts - 1; i++)	// Draw right lightning bolt.
 	{
-		MoveTo(rightLightningPts[i].h, rightLightningPts[i].v);
-		LineTo(rightLightningPts[i + 1].h - 1, rightLightningPts[i + 1].v);
+		MoveTo(rightLightningPts[i].x, rightLightningPts[i].y);
+		LineTo(rightLightningPts[i + 1].x - 1, rightLightningPts[i + 1].y);
 	}
 	
 	PenNormal();								// Return pen to normal.
+	*/
 }
 
+static void DrawBolt(const Point* p)
+{
+	for (int i = 0; i < kNumLightningPts - 1; i++)
+	{
+		int x1 = p[i].x, y1 = p[i].y;
+		int x2 = p[i + 1].x - 1, y2 = p[i + 1].y;      // igual que LineTo(x-1, y)
+		SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+		SDL_RenderDrawLine(renderer, x1, y1 + 1, x2, y2 + 1);   // PenSize(1, 2)
+	}
+}
+
+void DrawLightning(void)
+{
+	if (!lightningOn) return;
+
+	// Inversión de color: resultado = 1 - destino  (equivale a XOR con blanco)
+	SDL_BlendMode invert = SDL_ComposeCustomBlendMode(
+		SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR, SDL_BLENDFACTOR_ZERO, SDL_BLENDOPERATION_ADD,
+		SDL_BLENDFACTOR_ONE, SDL_BLENDFACTOR_ZERO, SDL_BLENDOPERATION_ADD);
+
+	SDL_SetRenderDrawBlendMode(renderer, invert);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	DrawBolt(leftLightningPts);
+	DrawBolt(rightLightningPts);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+}
+
+/*
 //--------------------------------------------------------------  DumpBackToWorkMap
 
 // Simple handy function that copies the entire background pixmap to theÉ
@@ -864,14 +917,14 @@ void DrawEye (void)
 void CopyAllRects(void)
 {
 	short i;
-
+	/*
 	printf(
 		"CopyAllRects | whichList=%d | num1=%d | num2=%d\n",
 		whichList,
 		numUpdateRects1,
 		numUpdateRects2
 	);
-
+	*/
 	if (whichList)
 	{
 		// 1. Restore previous graphics → persistent main window.

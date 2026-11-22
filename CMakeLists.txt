@@ -1,6 +1,9 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 4.0)
+project(NewCode C)
 
-project(SDL2Test)
+set(CMAKE_C_STANDARD 11)
+
+include_directories(.)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
@@ -10,29 +13,28 @@ find_package(SDL2_mixer REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(${SDL2_MIXER_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES("includes")
-INCLUDE_DIRECTORIES("Snd")
 INCLUDE_DIRECTORIES("Img")
-# Se añade el directorio a la ruta de búsqueda del compilador de turno
-#FILE(GLOB MiProyecto_SRC "src/*.c")
-#FILE(GLOB MiProyecto_SRC "includes/*.h")
-# FILE GLOB selecciona todos los archivos que cumplan la característica y los almacena en MiProyecto_SRC
-# GLOB no es recursivo. Si lo necesitas, usa GLOB_RECURSE
-
-add_executable(SDL2Test WIN32 	main.c  
-      	src/draw.c
-				includes/draw.h
-      	src/init.c
-      	includes/init.h
-				src/input.c
-				includes/input.h
-				src/sound.c
-				includes/sound.h
-				includes/main.h
-				includes/defs.h
-				includes/structs.h
-				includes/common.h
+add_executable(NewCode
+        src/Enemy.c
+        src/Externs.h
+        src/Graphics.c
+        src/Interface.c
+        src/Main.c
+        src/Play.c
+        #src/Prefs.c
+        src/SetUpTakeDown.c
+        #src/Sound.c
         src/Utilities.c
+        src/CoreSDL/SDL_Utilities.c
+        include/CoreSDL/SDL_Utilities.h
+        src/CoreSDL/SDL_Interface.c
+        include/CoreSDL/SDL_Interface.h
+        #src/CoreSDL/SDL_Sound.c
+        #include/CoreSDL/SDL_Sound.h
+        #src/CoreSDL/SDL_Utilities.c
+        #src/CoreSDL/String.c
+		Tests/TestRunner.c
+		Tests/TestRunner.h
 )
 
-target_link_libraries(SDL2Test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})
+target_link_libraries(NewCode ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})

@@ -2,7 +2,7 @@
 // Created by exepa on 10/3/25.
 //
 
-#include "SDL_Interface.h"
+#include "include/CoreSDL/SDL_Interface.h"
 #include <stdio.h>
 
 extern Point mousePoint;

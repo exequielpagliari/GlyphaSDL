@@ -2,7 +2,7 @@
 // Created by exepa on 9/26/25.
 //
 
-#include "SDL_Utilities.h"
+#include "include/CoreSDL/SDL_Utilities.h"
 #include <stdio.h>
 
 

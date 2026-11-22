@@ -10,7 +10,7 @@
 // Also included are the preference calls.
 
 
-#include "CoreSDL/SDL_Utilities.h"
+#include "include/CoreSDL/SDL_Utilities.h"
 #include "Externs.h"
 #include <stdio.h>
 

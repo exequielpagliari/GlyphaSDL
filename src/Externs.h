@@ -8,7 +8,7 @@
 #ifndef EXTERN
 #define EXTERN
 //#include <SDL2/SDL.h>
-#include "CoreSDL/SDL_Utilities.h"
+#include "include/CoreSDL/SDL_Utilities.h"
 
 #define	kPutInFront			(WindowPtr)-1L
 #define	kNormalUpdates		TRUE

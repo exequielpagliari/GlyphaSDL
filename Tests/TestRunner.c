@@ -4,8 +4,8 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
-#include "CoreSDL/SDL_Interface.h"
-#include "CoreSDL/SDL_Utilities.h"
+#include "include/CoreSDL/SDL_Interface.h"
+#include "include/CoreSDL/SDL_Utilities.h"
 
 #include "TestRunner.h"
 

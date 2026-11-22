@@ -37,7 +37,7 @@ cmake --build build
 Some compatibility and rendering functions can be exercised through the test runner:
 
 ```bash
-NewCode --test <test-name>
+GlyphaSDL --test <test-name>
 ```
 
 The tests currently cover parts of the SDL compatibility layer, timing functions, rectangle operations, memory handles, texture loading and rendering.

@@ -21,6 +21,7 @@ void WaitForNextTick(void);
 void DrawTorches(void);
 void CopyAllRects(void);
 void ShutItDown(void);
+void LogNextTick(long howMany);
 
 static int TestRandom(void)
 {

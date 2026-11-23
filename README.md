@@ -20,7 +20,7 @@ The original source structure is intentionally retained in several areas to make
 Requirements:
 
 - C11 compiler
-- CMake 4.0+
+- CMake 3.20+
 - SDL2
 - SDL2_image
 - SDL2_mixer

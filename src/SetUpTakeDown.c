@@ -23,7 +23,7 @@
 //#include <Palettes.h>					// Need "Palettes.h" for the depth calls.
 
 
-#define kImagePath "../Img/"
+#define kImagePath "Img/"
 #define kBmp ".bmp"
 
 #define kHandPictID				128		// These are all the resource ID's for 

@@ -33,7 +33,7 @@ int main (int argc, char* argv[]);
 
 prefsInfo	thePrefs;
 short		wasVolume;
-Boolean		switchedOut, quitting, canPlay, openTheScores;
+extern Boolean		switchedOut, quitting, canPlay, openTheScores;
 extern	Boolean		playing, pausing, evenFrame;
 
 

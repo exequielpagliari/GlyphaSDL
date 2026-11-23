@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.20)
 project(GlyphaSDL C)
 
 set(CMAKE_C_STANDARD 11)
@@ -36,5 +36,22 @@ add_executable(GlyphaSDL
 		Tests/TestRunner.c
 		Tests/TestRunner.h
 )
+
+# ------------------------------------------------------------
+# Runtime resources
+# ------------------------------------------------------------
+
+add_custom_command(TARGET GlyphaSDL POST_BUILD
+
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/Img"
+        "$<TARGET_FILE_DIR:GlyphaSDL>/Img"
+
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/Snd"
+        "$<TARGET_FILE_DIR:GlyphaSDL>/Snd"
+)
+
+
 
 target_link_libraries(GlyphaSDL ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_INCLUDE_DIR})

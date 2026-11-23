@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 project(GlyphaSDL C)
 
 set(CMAKE_C_STANDARD 11)
